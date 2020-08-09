@@ -1,0 +1,21 @@
+.root {
+    width: 65%;
+}
+
+.container {
+    margin: 30px 30px 10px 20px;
+    height: calc(100% - 180px);
+    overflow-y: auto;
+}
+
+.container::-webkit-scrollbar {
+    width: 0;
+}
+
+.header {
+
+}
+
+.containerMessages {
+
+}

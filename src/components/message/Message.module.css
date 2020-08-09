@@ -1,0 +1,87 @@
+.root_gust,
+.root_my {
+    width: 100%;
+    display: flex;
+    opacity: 0.5;
+    transform: scale(0.925);
+    animation: show 0.75s forwards;
+    word-break: break-all;
+}
+
+.root_gust{
+    justify-content: flex-start;
+}
+
+.root_my {
+    justify-content: flex-end;
+}
+
+@keyframes show {
+    0%{
+        opacity: 0.5;
+        transform: scale(0.925);
+    }
+    50%{
+        opacity: 0.75;
+        transform: scale(1.025);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.myMessage,
+.gustMessage {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    margin: 15px;
+    max-width: 80%;
+}
+
+.gustMessage {
+    background: rgba(13,82,152, 0.7);
+    transition: 0.3s;
+}
+
+.gustMessage:hover {
+    background: rgb(13,82,152);
+    transition: 0.3s;
+}
+
+.myMessage {
+    background: rgba(72,196,91, 0.7);
+    transition: 0.3s;
+}
+
+.myMessage:hover {
+    background: rgb(72,196,91);
+    transition: 0.3s;
+}
+
+.body {
+
+}
+
+.myFooter {
+    display: flex;
+    height: 20px;
+    justify-content: flex-start;
+    word-wrap: break-word;
+}
+
+.gustFooter {
+    display: flex;
+    height: 20px;
+    justify-content: flex-end;
+
+}
+
+.gustFooter p,
+.myFooter p {
+    word-break: break-all;
+    margin: 0;
+    padding-right: 10px;
+}

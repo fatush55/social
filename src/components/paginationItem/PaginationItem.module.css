@@ -1,0 +1,47 @@
+.root {
+    width: 30px;
+    height: 30px;
+    background: rgb(255,255,0);
+    border-radius: 5px;
+    color: rgb(138,43,226);
+    border: 1px solid rgb(138,43,226);
+    transform:  scale(1);
+    transition: transform 0.3s;
+    font-weight: normal;
+    z-index: 1;
+    user-select: none;
+    margin: 2px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.root.active {
+    cursor: default;
+}
+
+.root span {
+    font-weight: normal;
+    transition: 0.3s;
+}
+
+.root:not(.active):hover {
+    transform: scale(1.2);
+    border: 2px solid rgba(138,43,226, 0.8);
+    z-index: 99;
+    transition: transform 0.3s;
+}
+
+.root:not(.active):hover span {
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+
+.active {
+    background: rgb(138,43,226);
+    color: rgb(255,255,0);
+    font-weight: bold;
+    transition: 0.3s;
+}

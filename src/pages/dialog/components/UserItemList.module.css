@@ -1,0 +1,29 @@
+.root {
+    width: 35%;
+
+}
+
+.container {
+    width: 80%;
+    height: calc(100% - 30px);
+    margin: auto;
+}
+
+.container h3 {
+    text-align: center;
+    color: white;
+}
+
+.containerItem {
+    padding: 0 10px;
+    overflow-y: auto;
+    height: calc(100% - 50px);
+}
+
+.containerItem::-webkit-scrollbar {
+    width: 0;
+}
+
+.link {
+    text-decoration: none;
+}

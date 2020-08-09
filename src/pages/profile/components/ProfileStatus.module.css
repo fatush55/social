@@ -1,0 +1,21 @@
+.root,
+.rootAria {
+    width: calc(100% - 60px);
+    margin-left: 20px;
+    border-radius: 5px;
+    height: 50px;
+    background: rgba(255,255,0, 0.8);
+    color: rgb(138,43,226);
+    font-weight: bold;
+    padding: 10px 0 10px 20px;
+}
+
+
+.rootAria {
+    resize: none;
+}
+
+.rootAria:focus {
+    border: 3px solid rgba(138,43,226, 0.6);
+    outline: none;
+}

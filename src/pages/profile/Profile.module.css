@@ -1,0 +1,25 @@
+.root {
+    display: flex;
+    height: calc(100vh);
+    background: rgba(0,0,0,0.8);
+}
+
+
+.infoContainer {
+    width: 50%;
+}
+
+.commentContainer {
+    width: 50%;
+}
+
+.comment {
+    margin-top: 50px;
+    margin-bottom: 10px;
+    height: calc(100vh - 190px);
+    overflow-y: auto;
+}
+
+.comment::-webkit-scrollbar {
+    width: 0;
+}

@@ -1,0 +1,7 @@
+.root {
+    width: 100%;
+    background: rgba(0,0,0,0.8);
+    height: calc(100vh - 50px);
+    padding-top: 50px;
+    display: flex;
+}

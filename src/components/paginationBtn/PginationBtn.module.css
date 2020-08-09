@@ -1,0 +1,36 @@
+.root {
+    width: 30px;
+    height: 28px;
+    background: rgba(138,43,226,0.7);
+    border-radius: 5px;
+    color: rgb(255,255,0);
+    border: 1px solid rgb(138,43,226);
+    transition: 0.3s;
+    font-weight: normal;
+    z-index: 1;
+    user-select: none;
+    margin: 2px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    box-sizing: initial;
+}
+
+.root:hover {
+    z-index: 99;
+    background: rgb(138,43,226);
+    transition: 0.3s;
+}
+
+.root:focus{
+    outline: none;
+}
+
+.root:disabled {
+    background: rgba(138,43,226,0.3);
+    cursor: default;
+    border: 1px solid rgb(138,43,226);
+    color: rgba(255,255,0,0.5);
+}
