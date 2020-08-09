@@ -2,6 +2,9 @@
 import React from "react"
 // Style
 import style from "./ProfileInfo.module.css"
+// FontAwesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFileImage } from '@fortawesome/free-solid-svg-icons'
 //Components
 import { ProfileStatus } from "./ProfileStatus"
 // Other
@@ -9,12 +12,24 @@ import defaultImg from "../../../assets/img/default-user.jpg"
 
 
 export const ProfileInfos = (props) => {
-    const {profile, status, upDateStatus, idAuth} = props
+    const {profile, status, upDateStatus, handlerUpdatePhoto, idAuth} = props
 
     return (
         <div className={style.root}>
             <div className={style.avatar}>
-                <img src={profile.photos.large ? profile.photos.large : defaultImg} alt="avatar"/>
+                <div>
+                    <img src={profile.photos.large ? profile.photos.large : defaultImg} alt="avatar"/>
+                </div>
+                {
+                    idAuth === profile.userId && (
+                        <div className={style.fileBtn}>
+                            <label htmlFor="file-upload" className={style.fileLabel}>
+                                <FontAwesomeIcon icon={faFileImage}/>
+                            </label>
+                            <input id="file-upload" type="file" onChange={handlerUpdatePhoto}/>
+                        </div>
+                    )
+                }
             </div>
             <ProfileStatus status={status} upDateStatus={upDateStatus} idAuth={idAuth} userId={profile.userId} />
             <div className={style.info}>

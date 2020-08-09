@@ -7,14 +7,19 @@
 
 .avatar {
     margin-bottom: 20px;
+    position: relative;
 }
 
 .avatar img {
+    position: relative;
+    background-size: cover;
     width: 250px;
     margin-left: calc(50% - 150px);
     border-radius: 50%;
     align-items: center;
     justify-content: center;
+    opacity: 1;
+    transition: 0.3s;
 }
 
 .info {
@@ -47,6 +52,31 @@
     padding-right: 5px;
 }
 
-.statusContainer {
+.fileBtn {
+    position: absolute;
+    top: calc(50% - 35px);
+    left: calc(50% - 55px);
+    font-size: 40px;
+    color: rgb(255,255,0);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: 0.3s;
+}
 
+.fileBtn:hover {
+    opacity: 1;
+    transform: scale(1);
+    transition: 0.3s;
+}
+
+.fileBtn input {
+    display: none;
+}
+
+.fileLabel {
+    border: 1px solid rgb(255,255,0);
+    border-radius: 50%;
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
 }

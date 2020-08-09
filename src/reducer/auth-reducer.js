@@ -7,6 +7,7 @@ const baseType = 'auth/'
 const SET_AUTH_DATA = `${baseType}SET_AUTH_DATA`
 const SET_MY_PROFILE = `${baseType}SET_MY_PROFILE`
 const SET_LOG_OUT = `${baseType}SET_LOG_OUT`
+const UPDATE_AUTH_PHOTOS = `${baseType}UPDATE_PHOTOS`
 const TRIGGER_AUTH = `${baseType}TRIGGER_AUTH`
 
 const initialState = {
@@ -46,6 +47,16 @@ export const authReducer = (state = initialState, action) => {
                 authData: null,
                 myProfile: null,
             }
+        case UPDATE_AUTH_PHOTOS:
+            return {
+                ...state,
+                authData: {
+                    ...state.authData,
+                    photoSmall: action.photoSmall,
+                    photoLarge: action.photoLarge,
+                },
+            }
+
         case TRIGGER_AUTH:
             return {
                 ...state,
@@ -60,6 +71,7 @@ export const authReducer = (state = initialState, action) => {
 export const setAuthData = (payload) => ({type: SET_AUTH_DATA, payload})
 export const setPhoto = (payload) => ({type: SET_MY_PROFILE, payload})
 export const setLogOut = () => ({type: SET_LOG_OUT})
+export const updateAuthPhotos = (photos) => ({type: UPDATE_AUTH_PHOTOS, photoSmall: photos.small, photoLarge: photos.large})
 export const triggerIsAuth = (isAuth) => ({type: TRIGGER_AUTH, isAuth})
 
 

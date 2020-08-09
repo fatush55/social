@@ -11,9 +11,9 @@ import { getInitialize } from "./selectors/app-selector"
 // Style
 import style from "./App.module.css"
 // Components
-import { NavBar } from "./components/navbar/NavBar"
 import { HeaderContainer } from "./components/header/HeaderContainer"
 import { InitializeLoading } from "./components/initializeLoding/initializeLoading"
+import {NavBarContainer} from "./components/navbar/NavBarContainer";
 
 
 const  AppContainer = ({setInitialize, initialize}) => {
@@ -28,7 +28,7 @@ const  AppContainer = ({setInitialize, initialize}) => {
             initialize
             ? <>
                 <Router>
-                    <NavBar/>
+                    <NavBarContainer/>
                     <div className={style.contentContainer}>
                         <HeaderContainer/>
                         <Routes/>

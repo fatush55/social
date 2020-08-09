@@ -5,12 +5,14 @@ import { NavLink } from "react-router-dom"
 import style from "./NavBar.module.css"
 
 
-export const NavBar = () => {
+export const NavBar = ({currentProfile}) => {
+    const currentProfileId = currentProfile ? `/${currentProfile}` : ''
+
     return (
         <div className={style.root}>
             <div className={style.rootContainer} />
             <div className={style.itemContainer}>
-                <NavLink className={style.item} to='/profile' activeClassName={style.itemActive} >
+                <NavLink className={style.item} to={`/profile${currentProfileId}`} activeClassName={style.itemActive} >
                     Profile
                 </NavLink>
                 <NavLink className={style.item} to='/dialog' activeClassName={style.itemActive}>

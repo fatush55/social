@@ -37,6 +37,11 @@ export const profileApi = {
     upDataStatus(status) {
         return instance.put(`profile/status`, {status}).then(response => response.data)
     },
+    setPhotos(fileData) {
+        const formData = new FormData()
+        formData.append('image', fileData)
+        return instance.put(`profile/photo`, formData, {'Content-Type': 'multipart/form-data'}).then(response => response.data)
+    }
 }
 
 export const authApi = {

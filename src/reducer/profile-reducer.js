@@ -2,12 +2,14 @@
 import { profileApi } from "../api/api"
 // Reducer
 import { setCurrentProfile } from "./app-reducer"
+import { updateAuthPhotos } from "./auth-reducer"
 
 
 const baseType = 'profile/'
 const ADD_COMMENT = `${baseType}ADD_COMMENT`
 const SET_PROFILE = `${baseType}SET_PROFILE`
 const SET_STATUS = `${baseType}SET_STATUS`
+const UPDATE_PHOTOS = `${baseType}UPDATE_PHOTOS`
 const TRIGGER_LOADING = `${baseType}TRIGGER_LOADING`
 
 const initialState = {
@@ -70,6 +72,14 @@ export const profileReducer = (state = initialState, action) => {
                 ...state,
                 status: action.status,
             }
+        case UPDATE_PHOTOS:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    photos: action.photos,
+                }
+            }
         case TRIGGER_LOADING:
             return {
                 ...state,
@@ -85,6 +95,7 @@ export const addComment = (comment) => ({type: ADD_COMMENT, comment})
 export const setProfile = (profile) => ({type: SET_PROFILE, profile})
 export const setStatus = (status) => ({type: SET_STATUS, status})
 export const triggerLoading = (isLoading) => ({type: TRIGGER_LOADING, isLoading})
+export const updatePhotos = (photos) => ({type: UPDATE_PHOTOS, photos})
 
 // Thunk Creator
 export const createComment = (comment) => (dispatch) => dispatch(addComment(comment))
@@ -102,10 +113,13 @@ export const requestStatus = (id) => async (dispatch) => {
     dispatch(setStatus(data))
 }
 
+export const requestUpdatePhotos = (fileData) => async (dispatch) => {
+    const data = await profileApi.setPhotos(fileData)
+    dispatch(updatePhotos(data.data.photos))
+    dispatch(updateAuthPhotos(data.data.photos))
+}
+
 export const upDataStatus = (status) => async (dispatch) => {
     const data = await profileApi.upDataStatus(status)
     !data.resultCode &&  dispatch(setStatus(status))
 }
-
-
-

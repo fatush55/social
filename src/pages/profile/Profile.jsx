@@ -9,7 +9,7 @@ import { Loader } from "../../commons/loader/Loader"
 import { CommentForm } from "./components/CommentForm"
 
 
-export const Profile = ({comments, profile, handlerAddComment, isLoading, status, upDateStatus, idAuth}) => {
+export const Profile = ({comments, profile, handlerAddComment, isLoading, status, upDateStatus, handlerUpdatePhoto, idAuth}) => {
     const container = createRef()
 
     useEffect(() => {
@@ -28,6 +28,7 @@ export const Profile = ({comments, profile, handlerAddComment, isLoading, status
                                 status={status}
                                 upDateStatus={upDateStatus}
                                 idAuth={idAuth}
+                                handlerUpdatePhoto={handlerUpdatePhoto}
                             />
                         </div>
                         <div className={style.commentContainer}>
