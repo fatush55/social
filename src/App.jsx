@@ -1,6 +1,6 @@
 // Root
 import React, { useEffect } from "react"
-import { BrowserRouter as Router } from "react-router-dom"
+import { HashRouter as Router } from "react-router-dom"
 import { Routes } from "./Routes"
 import { connect } from "react-redux"
 import { compose } from "redux";
