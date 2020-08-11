@@ -8,7 +8,7 @@ import  { Input, CheckBox } from "../folrmControls/FormControls"
 
 const maxLength = creatorMaxLength(50)
 
-export const CreatorField = ({placeholder, name, validate = [], component, type = 'text'}) => {
+export const CreatorField = ({placeholder, name, validate = [], component, type = 'text', text = ''}) => {
     return (
         <div>
             <Field
@@ -17,6 +17,7 @@ export const CreatorField = ({placeholder, name, validate = [], component, type 
                 name={name}
                 validate={getValidator(validate)}
                 component={getComponent(component)}
+                text={text}
             />
         </div>
     )

@@ -6,9 +6,13 @@ import { compose } from "redux"
 // HOC
 import { withAuthRedirect } from "../../HOC/withAuthRedirect"
 // Reducer
-import { createComment, requestProfile, requestStatus, upDataStatus, requestUpdatePhotos } from "../../reducer/profile-reducer"
+import {
+    createComment, requestProfile, requestStatus, upDataStatus, requestUpdatePhotos, requestUpdateProfile
+} from "../../reducer/profile-reducer"
 // Selector
-import { getIsLoading, getStatus, getProfile, getComments } from "../../selectors/profile-selector"
+import {
+    getIsLoading, getStatus, getProfile, getComments, getStatusUpdateProfile,
+} from "../../selectors/profile-selector"
 import { getAuthData } from "../../selectors/auth-selector"
 import { getCurrentProfile } from "../../selectors/app-selector"
 // Components
@@ -18,11 +22,13 @@ import { Profile } from "./Profile"
 const ProfileWrapperContainer =  memo((props) => {
     const {
         requestProfile, createComment, requestStatus, upDataStatus,
-        authData, match, currentProfile, requestUpdatePhotos, ...prop
+        authData, match, currentProfile, requestUpdatePhotos, requestUpdateProfile,
+        ...prop
     } = props
     const handlerUpDateStatus = (status) => upDataStatus(status)
     const handlerAddComment = (comment) => createComment(comment)
     const handlerUpdatePhoto = (event) => requestUpdatePhotos(event.target.files[0])
+    const handlerProfile = (profile) =>  requestUpdateProfile({...profile})
 
     useEffect(() => {
         const id = Number(match.params.idUser) || authData.id
@@ -40,6 +46,7 @@ const ProfileWrapperContainer =  memo((props) => {
             upDateStatus={handlerUpDateStatus}
             handlerAddComment={handlerAddComment}
             handlerUpdatePhoto={handlerUpdatePhoto}
+            handlerProfile={handlerProfile}
         />
     )
 })
@@ -52,6 +59,7 @@ const mapStateToProps = (state) => {
         isLoading: getIsLoading(state),
         authData: getAuthData(state),
         currentProfile: getCurrentProfile(state),
+        statusUpdateProfile: getStatusUpdateProfile(state)
     }
 }
 
@@ -59,6 +67,6 @@ export const ProfileContainer = compose(
     withRouter,
     withAuthRedirect,
     connect(mapStateToProps, {
-        createComment, requestProfile, requestStatus, upDataStatus, requestUpdatePhotos
+        createComment, requestProfile, requestStatus, upDataStatus, requestUpdatePhotos, requestUpdateProfile
     }),
 )(ProfileWrapperContainer)

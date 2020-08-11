@@ -1,6 +1,7 @@
 // Root
 import React from "react"
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom"
+import classes from "classnames"
 // Style
 import style from "./UserCart.module.css"
 // Assets
@@ -11,14 +12,12 @@ import { MiniLoader } from "../../commons/miniLoader/MiniLoader";
 
 export const UserCart = ({user, fallowUser, followProgress, profile}) => {
     const isDisabled = followProgress.some(id => id === user.id)
+    const classesRoot = classes(
+        style.root, {[style.activeProf]: profile && profile.userId === user.id}, user.followed ? style.fallowed : style.unFallowed,
+    )
 
     return (
-        <div
-            className={
-                `${style.root} ${user.followed ? style.fallowed : style.unFallowed} 
-                ${profile && profile.userId === user.id ? style.activeProf : '' }`
-            }
-        >
+        <div className={classesRoot}>
             <div className={style.ava}>
                 <NavLink to={`/profile/${user.id}`} className={style.linkImg}>
                     <img src={user.photos.small ? user.photos.small : defaultUserImg } alt='ava' />

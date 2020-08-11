@@ -20,6 +20,7 @@ export const Routes  = () => {
             <Route path='/user' render={() => <UserContainer/>} />
             <Route path='/dialog/:idUser?' render={() => withSuspense(DialogContainer)} />
             <Route path='/login' render={() => withSuspense(LoginContainer)} />
+            <Route path='*' render={() => (<div>404</div>)} />
         </Switch>
     )
 }

@@ -1,5 +1,6 @@
 // Root
 import React from "react"
+import classes from "classnames"
 // Style
 import style from "./PaginationItem.module.css"
 
@@ -9,7 +10,7 @@ export const PaginationItem = ({id, active, setCurrencyPage, defaultValue = fals
 
     return (
         <div
-            className={`${style.root} ${active ? style.active : ''}`}
+            className={classes(style.root, {[style.active]: active})}
             onClick={handlerCurrencyPage}
         >
             <span>

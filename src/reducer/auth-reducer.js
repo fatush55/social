@@ -1,5 +1,5 @@
 // Api
-import { authApi, profileApi } from "../api/api"
+import {authApi, profileApi, securityApi} from "../api/api"
 import { stopSubmit } from "redux-form"
 
 
@@ -9,9 +9,12 @@ const SET_MY_PROFILE = `${baseType}SET_MY_PROFILE`
 const SET_LOG_OUT = `${baseType}SET_LOG_OUT`
 const UPDATE_AUTH_PHOTOS = `${baseType}UPDATE_PHOTOS`
 const TRIGGER_AUTH = `${baseType}TRIGGER_AUTH`
+const SET_CAPTCHA = `${baseType}SET_CAPTCHA`
 
 const initialState = {
     isAuth: false,
+    myStatus: '',
+    captcha: null,
     authData: {
         email: null,
         login: null,
@@ -19,7 +22,6 @@ const initialState = {
         photoSmall: null,
         photoLarge: null,
     },
-    myStatus: '',
 }
 
 export const authReducer = (state = initialState, action) => {
@@ -47,6 +49,11 @@ export const authReducer = (state = initialState, action) => {
                 authData: null,
                 myProfile: null,
             }
+        case SET_CAPTCHA:
+            return {
+                ...state,
+                captcha: action.url,
+            }
         case UPDATE_AUTH_PHOTOS:
             return {
                 ...state,
@@ -71,6 +78,7 @@ export const authReducer = (state = initialState, action) => {
 export const setAuthData = (payload) => ({type: SET_AUTH_DATA, payload})
 export const setPhoto = (payload) => ({type: SET_MY_PROFILE, payload})
 export const setLogOut = () => ({type: SET_LOG_OUT})
+export const setCaptcha = (url) => ({type: SET_CAPTCHA, url})
 export const updateAuthPhotos = (photos) => ({type: UPDATE_AUTH_PHOTOS, photoSmall: photos.small, photoLarge: photos.large})
 export const triggerIsAuth = (isAuth) => ({type: TRIGGER_AUTH, isAuth})
 
@@ -93,8 +101,10 @@ export const login = (loginData) => (dispatch) => {
     authApi.login(loginData).then((data) => {
         if (!data.resultCode) {
             dispatch(getAuth())
+            dispatch(setCaptcha(null))
         } else {
-             dispatch(stopSubmit('login', {_error: data.messages.join(), email: ' ', password: ' '}))
+            data.resultCode === 10 && securityApi.getCaptcha().then((data) => dispatch(setCaptcha(data.url)))
+            dispatch(stopSubmit('login', {_error: data.messages.join(), email: ' ', password: ' '}))
         }
     })
 }

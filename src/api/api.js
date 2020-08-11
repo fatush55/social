@@ -37,10 +37,13 @@ export const profileApi = {
     upDataStatus(status) {
         return instance.put(`profile/status`, {status}).then(response => response.data)
     },
-    setPhotos(fileData) {
+    updatePhotos(fileData) {
         const formData = new FormData()
         formData.append('image', fileData)
         return instance.put(`profile/photo`, formData, {'Content-Type': 'multipart/form-data'}).then(response => response.data)
+    },
+    updateProfile(profile) {
+        return instance.put(`profile`, profile).then(response => response.data)
     }
 }
 
@@ -48,10 +51,16 @@ export const authApi = {
     getMe() {
         return instance.get('auth/me').then(response => response.data)
     },
-    login({email, password, rememberMy = false}) {
-        return instance.post('auth/login', {email, password, rememberMy}).then(data => data.data)
+    login({email, password, rememberMy = false, captcha = null}) {
+        return instance.post('auth/login', {email, password, rememberMy, captcha}).then(data => data.data)
     },
     logout() {
         return instance.delete('auth/login').then(data => data.data)
+    }
+}
+
+export const securityApi = {
+    getCaptcha() {
+        return instance.get('security/get-captcha-url').then(response => response.data)
     }
 }

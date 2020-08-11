@@ -14,7 +14,7 @@ export const Header = ({authData, isAuth, handlerLogOut}) => {
                 isAuth
                     ? <>
                         <NavLink to={`/profile`} className={style.item} >
-                            <img className={style.itemImg} src={authData.photoSmall ? authData.photoSmall : defaultImg } alt=""/>
+                            <img className={style.itemImg} src={authData.photoSmall ? authData.photoSmall : defaultImg }  alt=''/>
                             {authData.login}
                         </NavLink>
                         <div className={`${style.item} ${style.itemBtn}`} onClick={handlerLogOut}>

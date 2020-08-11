@@ -4,6 +4,39 @@
     background: rgba(0,0,0,0.8);
 }
 
+.showMode{
+    transform: scale(0.8);
+    opacity: 0;
+    animation: show 0.5s forwards;
+}
+
+@keyframes show {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.editMode {
+    transform: scale(0.8);
+    opacity: 0;
+    animation: edit 0.5s forwards;
+}
+
+@keyframes edit {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
 
 .infoContainer {
     width: 50%;
@@ -23,3 +56,42 @@
 .comment::-webkit-scrollbar {
     width: 0;
 }
+
+.profileInfo {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 60px;
+}
+
+.editBtn,
+.showBtn {
+    position: absolute;
+    top: calc(100% - 60px);
+    left: calc(100% - 100px);
+    padding: 10px;
+    font-size: 30px;
+    border: none;
+    background: transparent;
+    color: rgb(255,255,0);
+    cursor: pointer;
+    opacity: 0.1;
+    transition: 0.3s;
+}
+
+.showBtn {
+    font-size: 35px;
+    top: calc(100% - 40px);
+}
+
+.editBtn:hover,
+.showBtn:hover {
+    opacity: 1;
+    transition: 0.3s;
+}
+.editBtn:focus,
+.showBtn:focus {
+    outline: none;
+}
+

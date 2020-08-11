@@ -21,7 +21,7 @@ const From = ({change, handleSubmit}) => {
             />
             <div>
                 <button onClick={clearForm} className={style.btn}>
-                    <FontAwesomeIcon  icon={faArrowAltCircleUp} />
+                    <FontAwesomeIcon icon={faArrowAltCircleUp} />
                 </button>
             </div>
         </form>

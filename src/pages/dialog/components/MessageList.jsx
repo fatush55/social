@@ -23,7 +23,8 @@ export const MessageList = ({messages, submitMessage, match, }) => {
             <div className={style.container} ref={container}>
                 <div className={style.containerMessages}>
                     {
-                        messages[idUser - 1] !== undefined && messages[idUser - 1].messages.map(elem => <Message key={elem.id} message={elem} />)
+                        messages[idUser - 1] !== undefined &&
+                        messages[idUser - 1].messages.map(elem => <Message key={elem.id} message={elem} />)
                     }
                 </div>
             </div>

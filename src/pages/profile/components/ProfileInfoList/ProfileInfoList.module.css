@@ -1,0 +1,29 @@
+.info {
+    padding: 20px;
+    font-size: 16px;
+    color: white;
+    overflow-x: auto;
+    height: 300px;
+}
+
+.info h3 {
+    text-align: center;
+    color: rgb(138,43,226);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.info::-webkit-scrollbar {
+    width: 0;
+}
+
+.infoItem {
+    margin: 10px;
+}
+
+.infoItem span {
+    color: rgb(255,255,0);
+    text-transform: uppercase;
+    font-weight: bold;
+    padding-right: 5px;
+}

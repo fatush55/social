@@ -33,12 +33,12 @@ export const Input = ({meta, input, ...props}) => {
     )
 }
 
-export const CheckBox = ({meta, input, ...props}) => {
+export const CheckBox = ({meta, input, text, ...props}) => {
     return(
         <div className={style.itemCheckBox}>
             <div className={style.itemContainer}>
                 <label className={style.container}>
-                    <span className={style.containerLabel}>Remember My</span>
+                    <span className={style.containerLabel}>{text}</span>
                     <input
                         {...input} {...props}
                         type={'checkbox'}

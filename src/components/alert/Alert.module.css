@@ -1,0 +1,101 @@
+.root {
+    position: fixed;
+    width: 500px;
+    z-index: 999;
+    left: calc(50% - 200px);
+    top: -50%;
+    opacity: 0;
+    border-radius: 5px;
+    text-align: center;
+    padding: 15px 10px 50px 10px;
+    font-size: 20px;
+    user-select: none;
+}
+
+.title {
+    user-select: none;
+    text-transform: uppercase;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.btn {
+    position: absolute;
+    top: 10px;
+    left: calc(100% - 40px);
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transform: scale(1);
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.1    );
+    transition: 0.3s;
+}
+
+.show {
+    animation: show 1s forwards;
+}
+
+.hidden {
+    animation: hide 1s forwards;
+}
+
+@keyframes show {
+    0% {
+        top: -50%;
+        opacity: 0;
+    }
+    100% {
+        top: 100px;
+        opacity: 1;
+    }
+}
+
+@keyframes hide {
+    0% {
+        top: 100px;
+        opacity: 1;
+    }
+    100% {
+        top: -50%;
+        opacity: 0;
+    }
+
+}
+
+.error {
+    color: white;
+    background: rgba(215,0,0,0.4);
+    border: 2px solid rgb(215,0,0);
+}
+
+.error span,
+.error .title {
+    color: rgb(215,0,0);
+}
+
+.warning {
+    color: white;
+    background: rgba(255,152,0,0.4);
+    border: 2px solid rgb(255,152,0);
+}
+
+.warning span,
+.warning .title {
+    color: rgb(255,152,0);
+}
+
+.success {
+    color: white;
+    background: rgba(0,128,0,0.4);
+    border: 2px solid rgb(0,128,0);
+}
+
+.success span,
+.success .title {
+    color: rgb(0,128,0);
+}

@@ -1,8 +1,9 @@
 // Api
 import { profileApi } from "../api/api"
 // Reducer
-import { setCurrentProfile } from "./app-reducer"
+import {cycleAlert, setCurrentProfile} from "./app-reducer"
 import { updateAuthPhotos } from "./auth-reducer"
+import {stopSubmit} from "redux-form";
 
 
 const baseType = 'profile/'
@@ -11,11 +12,13 @@ const SET_PROFILE = `${baseType}SET_PROFILE`
 const SET_STATUS = `${baseType}SET_STATUS`
 const UPDATE_PHOTOS = `${baseType}UPDATE_PHOTOS`
 const TRIGGER_LOADING = `${baseType}TRIGGER_LOADING`
+const TRIGGER_STATUS_UPDATE_PROFILE = `${baseType}TRIGGER_STATUS_UPDATE_PROFILE`
 
 const initialState = {
     profile: null,
     status: null,
     isLoading: true,
+    statusUpdateProfile: true,
     comments: [
         {
             id: 1,
@@ -65,7 +68,7 @@ export const profileReducer = (state = initialState, action) => {
         case SET_PROFILE:
             return {
                 ...state,
-                profile: action.profile,
+                profile: {...state.profile, ...action.profile},
             }
         case SET_STATUS:
             return {
@@ -85,6 +88,11 @@ export const profileReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: action.isLoading
             }
+        case TRIGGER_STATUS_UPDATE_PROFILE:
+            return {
+                ...state,
+                statusUpdateProfile: action.status
+            }
         default:
             return state
     }
@@ -95,6 +103,7 @@ export const addComment = (comment) => ({type: ADD_COMMENT, comment})
 export const setProfile = (profile) => ({type: SET_PROFILE, profile})
 export const setStatus = (status) => ({type: SET_STATUS, status})
 export const triggerLoading = (isLoading) => ({type: TRIGGER_LOADING, isLoading})
+export const triggerStatusUpdateProfile = (status) => ({type: TRIGGER_STATUS_UPDATE_PROFILE, status})
 export const updatePhotos = (photos) => ({type: UPDATE_PHOTOS, photos})
 
 // Thunk Creator
@@ -114,12 +123,37 @@ export const requestStatus = (id) => async (dispatch) => {
 }
 
 export const requestUpdatePhotos = (fileData) => async (dispatch) => {
-    const data = await profileApi.setPhotos(fileData)
+    const data = await profileApi.updatePhotos(fileData)
     dispatch(updatePhotos(data.data.photos))
     dispatch(updateAuthPhotos(data.data.photos))
+}
+
+export const requestUpdateProfile = (profileData) => (dispatch) => {
+    delete profileData.userId
+    delete profileData.photos
+    dispatch(triggerStatusUpdateProfile(false))
+    profileApi.updateProfile(profileData).then((data) => {
+        if (!data.resultCode) {
+            dispatch(setProfile(profileData))
+            dispatch(triggerStatusUpdateProfile(true))
+            dispatch(cycleAlert({message: 'successful update Profile', type: 'success'}))
+        } else {
+            dispatch(stopSubmit('editProfile',  prepareError(data.messages)))
+        }
+    })
+
 }
 
 export const upDataStatus = (status) => async (dispatch) => {
     const data = await profileApi.upDataStatus(status)
     !data.resultCode &&  dispatch(setStatus(status))
+}
+
+
+// Helpers
+const prepareError = (messages) => {
+    const data = {contacts: {}}
+    const regexp = /\([a-zA-Z]+->([a-zA-Z]+)\)/;
+    messages.forEach(elem => data.contacts[regexp.exec(elem)[1].toLocaleLowerCase()] = 'Invalid url')
+    return data;
 }
