@@ -13,7 +13,7 @@ import {
 import {
     getIsLoading, getStatus, getProfile, getComments, getStatusUpdateProfile,
 } from "../../selectors/profile-selector"
-import { getAuthData } from "../../selectors/auth-selector"
+import { getMyProfile } from "../../selectors/auth-selector"
 import { getCurrentProfile } from "../../selectors/app-selector"
 // Components
 import { Profile } from "./Profile"
@@ -25,8 +25,9 @@ const ProfileWrapperContainer =  memo((props) => {
         authData, match, currentProfile, requestUpdatePhotos, requestUpdateProfile,
         ...prop
     } = props
+
     const handlerUpDateStatus = (status) => upDataStatus(status)
-    const handlerAddComment = (comment) => createComment(comment)
+    const handlerAddComment = (comment) => createComment(comment, prop.profile.photos.small)
     const handlerUpdatePhoto = (event) => requestUpdatePhotos(event.target.files[0])
     const handlerProfile = (profile) =>  requestUpdateProfile({...profile})
 
@@ -57,7 +58,7 @@ const mapStateToProps = (state) => {
         profile: getProfile(state),
         status: getStatus(state),
         isLoading: getIsLoading(state),
-        authData: getAuthData(state),
+        authData: getMyProfile(state),
         currentProfile: getCurrentProfile(state),
         statusUpdateProfile: getStatusUpdateProfile(state)
     }

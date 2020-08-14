@@ -1,7 +1,7 @@
 // Root
 import React from "react"
 // Reducer
-import { dialogReducer, submitMessage, deleteMessage } from "../reducer/dialog-reducer"
+import { dialogReducer, submitMessage, deleteMessage } from "./dialog-reducer"
 
 const state = {
     messages: [

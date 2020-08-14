@@ -2,8 +2,10 @@
 import { profileApi } from "../api/api"
 // Reducer
 import {cycleAlert, setCurrentProfile} from "./app-reducer"
-import { updateAuthPhotos } from "./auth-reducer"
+import { setMyPhoto } from "./auth-reducer"
 import {stopSubmit} from "redux-form";
+// Type
+import {ProfileType, CommentType, PhotosType} from "../types/types";
 
 
 const baseType = 'profile/'
@@ -15,10 +17,10 @@ const TRIGGER_LOADING = `${baseType}TRIGGER_LOADING`
 const TRIGGER_STATUS_UPDATE_PROFILE = `${baseType}TRIGGER_STATUS_UPDATE_PROFILE`
 
 const initialState = {
-    profile: null,
-    status: null,
-    isLoading: true,
-    statusUpdateProfile: true,
+    profile: null as null | ProfileType,
+    status: null as null | string,
+    isLoading: true as boolean,
+    statusUpdateProfile: true as boolean,
     comments: [
         {
             id: 1,
@@ -47,10 +49,12 @@ const initialState = {
             text: 'jkljkl',
             like: 1
         },
-    ],
+    ] as Array<CommentType>,
 }
 
-export const profileReducer = (state = initialState, action) => {
+type initialStateType = typeof initialState
+
+export const profileReducer = (state: initialStateType = initialState, action: any): initialStateType => {
     switch (action.type) {
         case ADD_COMMENT:
             return {
@@ -58,7 +62,7 @@ export const profileReducer = (state = initialState, action) => {
                 comments: [...state.comments, {
                     id: state.comments.length + 1,
                     img: {
-                        url: state.profile.photos.small,
+                        url: action.img,
                         alt: 'avatar'
                     },
                     text: action.comment,
@@ -99,17 +103,42 @@ export const profileReducer = (state = initialState, action) => {
 }
 
 // Action Creator
-export const addComment = (comment) => ({type: ADD_COMMENT, comment})
-export const setProfile = (profile) => ({type: SET_PROFILE, profile})
-export const setStatus = (status) => ({type: SET_STATUS, status})
-export const triggerLoading = (isLoading) => ({type: TRIGGER_LOADING, isLoading})
-export const triggerStatusUpdateProfile = (status) => ({type: TRIGGER_STATUS_UPDATE_PROFILE, status})
-export const updatePhotos = (photos) => ({type: UPDATE_PHOTOS, photos})
+type AddCommentActionType = {
+    type: typeof ADD_COMMENT
+    comment: string,
+    img: string
+}
+export const addComment = (comment: string, img: string): AddCommentActionType => ({type: ADD_COMMENT, comment, img})
+type SetProfileActionType = {
+    type: typeof SET_PROFILE
+    profile: ProfileType
+}
+export const setProfile = (profile: ProfileType): SetProfileActionType => ({type: SET_PROFILE, profile})
+type SetStatusActionType = {
+    type: typeof SET_STATUS
+    status: string | null
+}
+export const setStatus = (status: string | null): SetStatusActionType => ({type: SET_STATUS, status})
+type TriggerLoadingActionType = {
+    type: typeof TRIGGER_LOADING
+    isLoading: boolean
+}
+export const triggerLoading = (isLoading: boolean): TriggerLoadingActionType => ({type: TRIGGER_LOADING, isLoading})
+type TriggerStatusUpdateProfileActionType = {
+    type: typeof TRIGGER_STATUS_UPDATE_PROFILE
+    status: boolean
+}
+export const triggerStatusUpdateProfile = (status: boolean): TriggerStatusUpdateProfileActionType => ({type: TRIGGER_STATUS_UPDATE_PROFILE, status})
+type UpdatePhotosActionType = {
+    type: typeof UPDATE_PHOTOS
+    photos: PhotosType
+}
+export const updatePhotos = (photos: PhotosType): UpdatePhotosActionType => ({type: UPDATE_PHOTOS, photos})
 
 // Thunk Creator
-export const createComment = (comment) => (dispatch) => dispatch(addComment(comment))
+export const createComment = (comment: string, img: string) => (dispatch: any) => dispatch(addComment(comment, img))
 
-export const requestProfile = (id) => async (dispatch) => {
+export const requestProfile = (id: number) => async (dispatch: any) => {
     dispatch(triggerLoading(true))
     const data = await profileApi.getProfile(id)
     dispatch(setProfile(data))
@@ -117,43 +146,42 @@ export const requestProfile = (id) => async (dispatch) => {
     dispatch(setCurrentProfile(id))
 }
 
-export const requestStatus = (id) => async (dispatch) => {
+export const requestStatus = (id: number) => async (dispatch: any) => {
     const data = await profileApi.getStatus(id)
     dispatch(setStatus(data))
 }
 
-export const requestUpdatePhotos = (fileData) => async (dispatch) => {
+export const requestUpdatePhotos = (fileData: object) => async (dispatch: any) => {
     const data = await profileApi.updatePhotos(fileData)
     dispatch(updatePhotos(data.data.photos))
-    dispatch(updateAuthPhotos(data.data.photos))
+    dispatch(setMyPhoto(data.data.photos))
 }
 
-export const requestUpdateProfile = (profileData) => (dispatch) => {
+export const requestUpdateProfile = (profileData: ProfileType) => (dispatch: any) => {
     delete profileData.userId
     delete profileData.photos
     dispatch(triggerStatusUpdateProfile(false))
-    profileApi.updateProfile(profileData).then((data) => {
+    profileApi.updateProfile(profileData).then((data: any) => {
         if (!data.resultCode) {
             dispatch(setProfile(profileData))
             dispatch(triggerStatusUpdateProfile(true))
             dispatch(cycleAlert({message: 'successful update Profile', type: 'success'}))
         } else {
-            dispatch(stopSubmit('editProfile',  prepareError(data.messages)))
+            dispatch(stopSubmit('editProfile', prepareError(data.messages)))
         }
     })
 
 }
 
-export const upDataStatus = (status) => async (dispatch) => {
+export const upDataStatus = (status: string) => async (dispatch: any) => {
     const data = await profileApi.upDataStatus(status)
     !data.resultCode &&  dispatch(setStatus(status))
 }
 
-
 // Helpers
-const prepareError = (messages) => {
-    const data = {contacts: {}}
-    const regexp = /\([a-zA-Z]+->([a-zA-Z]+)\)/;
+const prepareError = (messages: Array<string>): object => {
+    const data = {contacts: {} as any}
+    const regexp = /\([a-zA-Z]+->([a-zA-Z]+)\)/ as any;
     messages.forEach(elem => data.contacts[regexp.exec(elem)[1].toLocaleLowerCase()] = 'Invalid url')
     return data;
 }

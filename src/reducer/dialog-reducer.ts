@@ -2,6 +2,26 @@ const baseType = 'dialog/'
 const SUBMIT_MESSAGE = `${baseType}SUBMIT_MESSAGE`
 const DELETE_MESSAGE = `${baseType}DELETE_MESSAGE`
 
+type MessagesProfileType = {
+    id: string
+    isGust: boolean
+    body: string
+    time: string
+    check: boolean
+}
+
+type MessageType = {
+    id: number
+    messages: Array<MessagesProfileType>
+}
+
+type UsersType = {
+    id: number
+    img: {url: string, alt: string}
+    name: string
+    message: number
+}
+
 const initialState = {
     messages: [
         {
@@ -174,7 +194,7 @@ const initialState = {
 
             ],
         },
-    ],
+    ] as Array<MessageType>,
     users: [
         {
             id: 1,
@@ -257,12 +277,14 @@ const initialState = {
             name: 'Misha maksimenco',
             message: 5
         },
-    ],
+    ] as Array<UsersType>,
 }
 
-export const dialogReducer = (state = initialState, action) => {
+type InitialStateType = typeof initialState
+
+export const dialogReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
     switch (action.type) {
-        case SUBMIT_MESSAGE:
+    case SUBMIT_MESSAGE:
             const date = new Date()
 
             return  {
@@ -304,5 +326,16 @@ export const dialogReducer = (state = initialState, action) => {
     }
 }
 
-export const submitMessage = (id, message) => ({type: SUBMIT_MESSAGE, id, message})
-export const deleteMessage = (userId, messageId) => ({type: DELETE_MESSAGE, userId, messageId})
+// Action Creator
+type SubmitMessageActionType = {
+    type: typeof SUBMIT_MESSAGE
+    id: number,
+    message: string
+}
+export const submitMessage = (id: number, message: string): SubmitMessageActionType => ({type: SUBMIT_MESSAGE, id, message})
+type DeleteMessageActionType = {
+    type: typeof DELETE_MESSAGE
+    userId: string,
+    messageId: number
+}
+export const deleteMessage = (userId: string, messageId: number): DeleteMessageActionType => ({type: DELETE_MESSAGE, userId, messageId})

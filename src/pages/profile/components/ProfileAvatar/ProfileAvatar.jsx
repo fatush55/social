@@ -13,7 +13,7 @@ export const ProfileAvatar = ({profile, handlerUpdatePhoto, idAuth}) => {
     return (
         <div className={style.avatar}>
             <div>
-                <img src={profile.photos.large ? profile.photos.large : defaultImg} alt="avatar"/>
+                <img src={profile.photos ? profile.photos.large : defaultImg} alt="avatar"/>
             </div>
             {
                 idAuth === profile.userId && (

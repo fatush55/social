@@ -7,15 +7,15 @@ import style from "./Header.module.css"
 import defaultImg from "../../assets/img/default-user.jpg"
 
 
-export const Header = ({authData, isAuth, handlerLogOut}) => {
+export const Header = ({myProfile, isAuth, handlerLogOut}) => {
     return (
         <div className={style.root}>
             {
                 isAuth
                     ? <>
                         <NavLink to={`/profile`} className={style.item} >
-                            <img className={style.itemImg} src={authData.photoSmall ? authData.photoSmall : defaultImg }  alt=''/>
-                            {authData.login}
+                            <img className={style.itemImg} src={myProfile.photos ? myProfile.photos.small : defaultImg }  alt=''/>
+                            {myProfile.login}
                         </NavLink>
                         <div className={`${style.item} ${style.itemBtn}`} onClick={handlerLogOut}>
                             Log Out

@@ -5,19 +5,18 @@ import { compose } from "redux"
 // Reducer
 import { login, logout } from "../../reducer/auth-reducer"
 // Selector
-import {getAuthData, getCaptcha, getIsAuth} from "../../selectors/auth-selector"
+import { getCaptcha, getIsAuth } from "../../selectors/auth-selector"
 // Components
 import { Login } from "./Login"
 
 
 const LoginWrapperContainer =  memo((props) =>{
-    const handlerSubmit = (loginData) => props.login(loginData)
+    const handlerSubmit = ({email, password, rememberMy, captcha}) => props.login(email, password, rememberMy, captcha)
 
     return <Login {...props} handlerSubmit={handlerSubmit} />
 })
 
 const mapStateToProps = (state) => ({
-    authData: getAuthData(state),
     isAuth: getIsAuth(state),
     captcha: getCaptcha(state)
 })

@@ -9,7 +9,7 @@ import { withAuthRedirect } from "../../HOC/withAuthRedirect"
 import { addComment, requestProfile, requestStatus, upDataStatus} from "../../reducer/profile-reducer"
 // Selector
 import {  getIsLoading, getStatus, getProfile, getComments } from "../../selectors/profile-selector"
-import {  getAuthData } from "../../selectors/auth-selector"
+import {  getMyProfile } from "../../selectors/auth-selector"
 // Components
 import { Profile } from "./Profile"
 
@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
         profile: getProfile(state),
         status: getStatus(state),
         isLoading: getIsLoading(state),
-        authData: getAuthData(state),
+        authData: getMyProfile(state),
     }
 }
 

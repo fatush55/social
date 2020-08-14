@@ -51,7 +51,7 @@ export const authApi = {
     getMe() {
         return instance.get('auth/me').then(response => response.data)
     },
-    login({email, password, rememberMy = false, captcha = null}) {
+    login(email, password, rememberMy = false, captcha = null) {
         return instance.post('auth/login', {email, password, rememberMy, captcha}).then(data => data.data)
     },
     logout() {

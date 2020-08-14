@@ -10,7 +10,7 @@ import { submitMessage } from "../../reducer/dialog-reducer"
 // Selector
 import { getUsers, getMessages } from "../../selectors/dialog-selector"
 // Components
-import { Dialog } from "./Dialog";
+import { Dialog } from "./Dialog"
 
 const DialogWrapperContainer =  memo((props) => <Dialog {...props} />)
 

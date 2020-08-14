@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 // Reducer
 import { logout } from "../../reducer/auth-reducer"
 // Selector
-import {  getAuthData, getIsAuth } from "../../selectors/auth-selector"
+import {  getMyProfile, getIsAuth } from "../../selectors/auth-selector"
 // Components
 import { Header } from "./Header"
 
@@ -19,7 +19,7 @@ class HeaderApiContainer extends Component {
 
 const mapStateToProps = (state) => ({
     isAuth: getIsAuth(state),
-    authData: getAuthData(state),
+    authData: getMyProfile(state),
 })
 
 export const HeaderContainer = connect(mapStateToProps, {logout})(HeaderApiContainer)
