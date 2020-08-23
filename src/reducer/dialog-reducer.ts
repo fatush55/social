@@ -1,26 +1,10 @@
+// Type
+import { MessageType, UsersDialogType } from "../types/dialog-reduser-type"
+
+
 const baseType = 'dialog/'
 const SUBMIT_MESSAGE = `${baseType}SUBMIT_MESSAGE`
 const DELETE_MESSAGE = `${baseType}DELETE_MESSAGE`
-
-type MessagesProfileType = {
-    id: string
-    isGust: boolean
-    body: string
-    time: string
-    check: boolean
-}
-
-type MessageType = {
-    id: number
-    messages: Array<MessagesProfileType>
-}
-
-type UsersType = {
-    id: number
-    img: {url: string, alt: string}
-    name: string
-    message: number
-}
 
 const initialState = {
     messages: [
@@ -277,7 +261,7 @@ const initialState = {
             name: 'Misha maksimenco',
             message: 5
         },
-    ] as Array<UsersType>,
+    ] as Array<UsersDialogType>,
 }
 
 type InitialStateType = typeof initialState

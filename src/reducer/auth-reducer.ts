@@ -1,9 +1,10 @@
 // Api
 import { authApi, profileApi, securityApi } from "../api/api"
 // Reducer
-import { stopSubmit } from "redux-form"
+
 // Type
-import { PhotosType, AuthDataType } from "../types/types"
+import { PhotosType } from "../types/types"
+import { LoginValue, AuthDataType } from "../types/auth-reducer-type"
 
 
 const baseType = 'auth/'
@@ -16,7 +17,7 @@ const SET_CAPTCHA = `${baseType}SET_CAPTCHA`
 const initialState = {
     isAuth: false as boolean,
     myStatus: '' as string,
-    captcha: null as null | string,
+    captcha: '' as string,
     myProfile: {
         email: null,
         login: null,
@@ -71,20 +72,24 @@ type SetMyProfileActionType = {
     myProfile: AuthDataType
 }
 export const setMyProfile = (myProfile: AuthDataType): SetMyProfileActionType => ({type: SET_MY_PROFILE, myProfile})
+
 type SetPhotoActionType = {
     type: typeof SET_MY_PROFILE
     photos: PhotosType
 }
 export const setMyPhoto = (photos: PhotosType): SetPhotoActionType => ({type: SET_MY_PHOTOS, photos})
+
 type SetLogOutActionType = {
     type: typeof SET_LOG_OUT
 }
 export const setLogOut = (): SetLogOutActionType => ({type: SET_LOG_OUT})
+
 type SetCaptchaActionType = {
     type: typeof SET_CAPTCHA
-    url: null | string
+    url: string
 }
-export const setCaptcha = (url: null | string): SetCaptchaActionType => ({type: SET_CAPTCHA, url})
+export const setCaptcha = (url: string): SetCaptchaActionType => ({type: SET_CAPTCHA, url})
+
 type TriggerIsAuthActionType = {
     type: typeof TRIGGER_AUTH
     isAuth: boolean
@@ -105,14 +110,15 @@ export const getAuth = () => async (dispatch: any) => {
     return Promise.all([dataAuth]);
 }
 
-export const login = (email: string, password: string, rememberMy: boolean, captcha: null | string) => (dispatch: any) => {
+
+
+export const login = ({email, password, rememberMy, captcha}: LoginValue) => (dispatch: any) => {
     authApi.login(email, password, rememberMy = false, captcha).then((data: any) => {
         if (!data.resultCode) {
             dispatch(getAuth())
-            dispatch(setCaptcha(null))
+            dispatch(setCaptcha(''))
         } else {
             data.resultCode === 10 && securityApi.getCaptcha().then((data: any) => dispatch(setCaptcha(data.url)))
-            dispatch(stopSubmit('login', {_error: data.messages.join(), email: ' ', password: ' '}))
         }
     })
 }

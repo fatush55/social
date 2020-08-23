@@ -1,0 +1,56 @@
+.item {
+    width: 50%;
+    margin-left: 25%;
+    padding: 5px 20px 5px 10px;
+    border-radius: 5px;
+    outline: none;
+    border: 2px solid rgb(138,43,226);
+    background: rgba(138,43,226, 0.3);
+    color: rgb(255,255,0);
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+.item:focus {
+    box-shadow: 0 0 0 3px rgba(138,43,226, 0.6);
+    transition: 0.3s;
+}
+
+.itemError {
+    border: 2px solid rgb(215,0,0);
+    background: rgba(215,0,0, 0.3);
+    color: rgb(215,0,0);
+    transition: 0.3s;
+}
+
+.itemError:focus {
+    box-shadow: 0 0 0 3px rgba(215,0,0, 0.6);
+    transition: 0.3s;
+}
+
+.itemSuccess {
+    border: 2px solid rgb(0,128,0);
+    background: rgba(0,128,0,0.3);
+    color: rgb(0,128,0);
+    transition: 0.3s;
+}
+
+.itemSuccess:focus {
+    box-shadow: 0 0 0 3px rgba(0,128,0,0.6);
+    transition: 0.3s;
+}
+
+.icon {
+    position: absolute;
+    top: 6px;
+    left: calc(75% + 5px);
+    font-size: 20px;
+}
+
+.iconSuccess {
+    color: rgb(0,128,0);
+}
+
+.iconError{
+    color: rgb(215,0,0);
+}

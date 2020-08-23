@@ -1,0 +1,32 @@
+.root {
+    width: 100%;
+    margin: 20px 0;
+    position: relative;
+}
+
+.itemCheckBox {
+    margin-left: 25%;
+}
+
+.itemContainer {
+    position: relative;
+}
+
+.error {
+    position: absolute;
+    top: calc(50% - 15px);
+    left: calc(75% + 50px);
+    color: white;
+    background: rgb(215,0,0);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.error:after {
+    content: '';
+    position: absolute;
+    border: 10px solid transparent;
+    left: -25px;
+    top: 5px;
+    border-right: 17px solid rgb(215,0,0);
+}

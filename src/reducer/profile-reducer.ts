@@ -3,9 +3,8 @@ import { profileApi } from "../api/api"
 // Reducer
 import {cycleAlert, setCurrentProfile} from "./app-reducer"
 import { setMyPhoto } from "./auth-reducer"
-import {stopSubmit} from "redux-form";
 // Type
-import {ProfileType, CommentType, PhotosType} from "../types/types";
+import { ProfileType, CommentType, PhotosType} from "../types/types"
 
 
 const baseType = 'profile/'
@@ -61,10 +60,12 @@ export const profileReducer = (state: initialStateType = initialState, action: a
                 ...state,
                 comments: [...state.comments, {
                     id: state.comments.length + 1,
-                    img: {
-                        url: action.img,
-                        alt: 'avatar'
-                    },
+                    img: action.img.length
+                        ? {
+                            url: action.img,
+                            alt: 'avatar'
+                        }
+                        : null,
                     text: action.comment,
                     like: 0
                 }]
@@ -142,8 +143,8 @@ export const requestProfile = (id: number) => async (dispatch: any) => {
     dispatch(triggerLoading(true))
     const data = await profileApi.getProfile(id)
     dispatch(setProfile(data))
-    dispatch(triggerLoading(false))
     dispatch(setCurrentProfile(id))
+    dispatch(triggerLoading(false))
 }
 
 export const requestStatus = (id: number) => async (dispatch: any) => {
@@ -158,19 +159,17 @@ export const requestUpdatePhotos = (fileData: object) => async (dispatch: any) =
 }
 
 export const requestUpdateProfile = (profileData: ProfileType) => (dispatch: any) => {
-    delete profileData.userId
-    delete profileData.photos
     dispatch(triggerStatusUpdateProfile(false))
     profileApi.updateProfile(profileData).then((data: any) => {
+        console.log(data)
         if (!data.resultCode) {
             dispatch(setProfile(profileData))
             dispatch(triggerStatusUpdateProfile(true))
             dispatch(cycleAlert({message: 'successful update Profile', type: 'success'}))
         } else {
-            dispatch(stopSubmit('editProfile', prepareError(data.messages)))
+
         }
     })
-
 }
 
 export const upDataStatus = (status: string) => async (dispatch: any) => {
@@ -179,9 +178,9 @@ export const upDataStatus = (status: string) => async (dispatch: any) => {
 }
 
 // Helpers
-const prepareError = (messages: Array<string>): object => {
-    const data = {contacts: {} as any}
-    const regexp = /\([a-zA-Z]+->([a-zA-Z]+)\)/ as any;
-    messages.forEach(elem => data.contacts[regexp.exec(elem)[1].toLocaleLowerCase()] = 'Invalid url')
-    return data;
-}
+// const prepareError = (messages: Array<string>): object => {
+//     const data = {contacts: {} as any}
+//     const regexp = /\([a-zA-Z]+->([a-zA-Z]+)\)/ as any;
+//     messages.forEach(elem => data.contacts[regexp.exec(elem)[1].toLocaleLowerCase()] = 'Invalid url')
+//     return data;
+// }

@@ -1,0 +1,51 @@
+
+
+.area {
+    width: calc(100% - 140px);
+    height: 70px;
+    margin-left: 15px;
+    margin-top: 15px;
+    resize: none;
+    border-radius: 5px;
+    background: rgba(55,255,0,0.1);
+    color:  rgb(255,255,0);
+    padding: 10px 100px 10px 10px;
+    font-size: 16px;
+    border: 2px solid rgb(255,255,0);
+}
+
+.area:focus {
+    border: 2px solid rgb(255,255,0);
+    outline: none;
+}
+
+.btn_s {
+    position: absolute;
+    width: 50px;
+    height: 100px;
+    background: none;
+    border: none;
+    margin-top: 15px;
+    top: calc(100% - 130px);
+    left: calc(100% - 90px);
+    text-align: center;
+    color: rgb(255,255,0);
+    font-size: 50px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btn_s svg {
+    border-radius: 50%;
+    border: 1px solid rgb(255,255,0);
+}
+
+.btn_s:hover svg {
+    box-shadow: 2px 2px 20px rgba(255,255,0,1);
+}
+
+.btn_s:focus {
+    border: none;
+    outline: none;
+}

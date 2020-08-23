@@ -4,18 +4,10 @@
 
 .container {
     margin: 30px 30px 10px 20px;
-    height: calc(100% - 180px);
+    height: calc(100% - 170px);
     overflow-y: auto;
 }
 
 .container::-webkit-scrollbar {
     width: 0;
-}
-
-.header {
-
-}
-
-.containerMessages {
-
 }

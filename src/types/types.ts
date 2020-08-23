@@ -1,13 +1,13 @@
 export type PhotosType = {
-    small: string | null
-    large: string | null
+    small: string
+    large: string
 }
 
 export type UsersType = {
     id: number
     name: string
     status: string | null
-    photos: PhotosType
+    photos: null | PhotosType
     followed: boolean
     uniqueUrlName?: null
 }
@@ -28,20 +28,26 @@ export type ProfileType = {
     lookingForAJob?: boolean
     lookingForAJobDescription?: string
     fullName?: string
+    aboutMe?: string | null
     contacts?: ContactsType
     photos?: PhotosType
+}
+
+export type ImgType = {
+    url: string
+    alt: string
 }
 
 export type CommentType = {
     id: number
     text: string
     like: number
-    img: {url: string| null, alt: string| null}
+    img: ImgType | null
 }
 
-export type AuthDataType = {
-    email?: null | string
-    login?: null | string
-    id?: null | number
-    photos: null | PhotosType
+export type MatchType = {
+    params: {idUser: number};
+    isExact: boolean;
+    path: string;
+    url: string;
 }

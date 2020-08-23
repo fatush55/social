@@ -6,6 +6,7 @@ import { withSuspense } from "./HOC/withSuspense"
 // Pages
 import { ProfileContainer } from "./pages/profile/ProfileContainer";
 import { UserContainer } from "./pages/user/UserContainer";
+// import {TestPageContainer} from "./pages/test/TestPageContainer";
 
 // Laze Pages
 const DialogContainer = lazy(() => import("./pages/dialog/DialogContainer"));
@@ -20,6 +21,7 @@ export const Routes  = () => {
             <Route path='/user' render={() => <UserContainer/>} />
             <Route path='/dialog/:idUser?' render={() => withSuspense(DialogContainer)} />
             <Route path='/login' render={() => withSuspense(LoginContainer)} />
+            {/*<Route path='/test' render={() => <TestPageContainer/>} />*/}
             <Route path='*' render={() => (<div>404</div>)} />
         </Switch>
     )

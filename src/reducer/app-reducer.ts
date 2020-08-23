@@ -1,7 +1,7 @@
 // Other
 import { getAuth } from "./auth-reducer"
 // Type
-import { ProfileType } from "../types/types"
+import { AlertType, HiddenAlertType } from "../types/app-reducet-type"
 
 const baseType = 'app/'
 const SET_INITIALIZE = `${baseType}SET_INITIALIZE`
@@ -11,9 +11,9 @@ const SET_HIDDEN_ALERT = `${baseType}SET_HIDDEN_ALERT`
 
 const initialState = {
     initialize: false as boolean,
-    currentProfile: null as null | ProfileType,
-    alert: null as null | string,
-    hiddenAlert: null as null | 'show' | 'hide',
+    currentProfile: null as null | number,
+    alert: null as null | AlertType,
+    hiddenAlert: null as HiddenAlertType,
 }
 
 type InitialStateType = typeof initialState
@@ -67,8 +67,8 @@ type SetHiddenAlertActionType = {
 export const setHiddenAlert = (payload: null | 'show' | 'hide'): SetHiddenAlertActionType => ({type: SET_HIDDEN_ALERT, payload})
 
 // Thunk creator
-export const setInitialize = () => (dispatch: any) => {
-    const promiseGetAuth = dispatch(getAuth())
+export const setInitialize = () => async (dispatch: any) => {
+    const promiseGetAuth = await dispatch(getAuth())
 
     Promise.all([promiseGetAuth]).then(() => {
         dispatch(triggerInitialize())
