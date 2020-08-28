@@ -3,7 +3,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { compose } from "redux"
 // Reducer
-import { requestUsers, setFollow, } from "../../reducer/user-reducer"
+import { requestUsers, setFollow, } from "../../reducers/user-reducer"
 // Selectors
 import { getUser, getCurrentPage, getSizePage, getFollowProgress, getIsLoading, getTotalUsers } from "../../selectors/users-selector"
 import { getProfile } from "../../selectors/profile-selector"

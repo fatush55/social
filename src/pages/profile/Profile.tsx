@@ -11,7 +11,7 @@ import { Loader } from "../../commons/loader/Loader"
 import { ProfileStatus } from "./components/ProfileStatus/ProfileStatus"
 import { ProfileInfoList } from "./components/ProfileInfoList/ProfileInfoList"
 import { ProfileAvatar } from "./components/ProfileAvatar/ProfileAvatar"
-import { WriteAreaForm } from "../../formik/form/comment/WriteAreaForm"
+import { WriteAreaForm } from "../../formik/form/write-area-form/WriteAreaForm"
 
 // Type
 import {CommentType, ProfileType} from "../../types/types"
@@ -35,7 +35,7 @@ type PropsType = {
 
     upDateStatus: (status: string) => void
     handlerAddComment: (comment: string) => void
-    handlerUpdatePhoto: (event: object) => void
+    handlerUpdatePhoto: (event: File) => void
     requestUpdateProfile: (profile: ProfileType) => void
 }
 

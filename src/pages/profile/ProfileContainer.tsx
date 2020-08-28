@@ -5,14 +5,10 @@ import { connect } from "react-redux"
 import { compose } from "redux"
 // HOC
 import { withAuthRedirect } from "../../HOC/withAuthRedirect"
-// Reducer
-import {
-    createComment, requestProfile, requestStatus, upDataStatus, requestUpdatePhotos, requestUpdateProfile
-} from "../../reducer/profile-reducer"
+// Thunk
+import { createComment, requestProfile, requestStatus, upDataStatus, requestUpdatePhotos, requestUpdateProfile } from "../../thunks/profile-thunk"
 // Selector
-import {
-    getIsLoading, getStatus, getProfile, getComments, getStatusUpdateProfile,
-} from "../../selectors/profile-selector"
+import { getIsLoading, getStatus, getProfile, getComments, getStatusUpdateProfile } from "../../selectors/profile-selector"
 import { getMyProfile } from "../../selectors/auth-selector"
 import { getCurrentProfile } from "../../selectors/app-selector"
 // Components
@@ -55,9 +51,7 @@ const ProfileWrapperContainer: FC<StateToPopsType & DispatchToPopsType & OwnToPo
     const photoUrl = prop.profile && prop.profile.photos && prop.profile.photos.small ? prop.profile.photos.small : ''
     const handlerUpDateStatus = (status: string): void => upDataStatus(status)
     const handlerAddComment = (comment: string) => createComment(comment, photoUrl)
-    const handlerUpdatePhoto = (file: object) => requestUpdatePhotos(file)
-    // const handlerProfile = (form: ProfileType) =>  props.profile && requestUpdateProfile({...props.profile, contacts: form})
-
+    const handlerUpdatePhoto = (file: File) => requestUpdatePhotos(file)
 
     useEffect(() => {
         const id = Number(match.params.idUser) || (authData && authData.id ? authData.id : 0)
@@ -92,7 +86,7 @@ const mapStateToProps = (state: RootState): StateToPopsType => {
     }
 }
 
-export const ProfileContainer = compose(
+export const ProfileContainer = compose<StateToPopsType & DispatchToPopsType & OwnToPopsType>(
     withRouter,
     withAuthRedirect,
     connect(mapStateToProps, {

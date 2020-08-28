@@ -1,11 +1,11 @@
 // Root
-import React, {useEffect, useLayoutEffect, FC, useCallback} from "react"
+import React, { useEffect, useLayoutEffect, FC, useCallback } from "react"
 import { BrowserRouter as Router } from "react-router-dom"
 import { Routes } from "./Routes"
-import { connect } from "react-redux"
+import { connect, Provider } from "react-redux"
 import { compose } from "redux"
 // Reducer
-import { setInitialize, cycleAlert } from "./reducer/app-reducer"
+import { setInitialize, cycleAlert } from "./thunks/app-thunk"
 // Selector
 import { getInitialize } from "./selectors/app-selector"
 // Style
@@ -16,13 +16,9 @@ import { InitializeLoading } from "./components/initializeLoding/InitializeLoadi
 import { NavBarContainer } from "./components/navbar/NavBarContainer"
 import { AlertContainer } from "./components/alert/AlertContainer"
 // Type
-import { RootState } from "./store"
+import {RootState, store} from "./store"
+import { AlertType } from "./types/app-reducet-type"
 
-
-type CycleAlertArgumentType = {
-    message: string
-    type: string
-}
 
 type StateToPopsType = {
     initialize: boolean
@@ -30,16 +26,12 @@ type StateToPopsType = {
 
 type DispatchToPopsType = {
     setInitialize: () => void
-    cycleAlert: (message: CycleAlertArgumentType) => void
+    cycleAlert: (message: AlertType) => void
 }
 
-type OwnToPopsType = {
-
-}
-
-const  AppContainer: FC<StateToPopsType & DispatchToPopsType & OwnToPopsType> = ({setInitialize, initialize, cycleAlert}) => {
+const  AppContainer: FC<StateToPopsType & DispatchToPopsType> = ({setInitialize, initialize, cycleAlert}) => {
     const catchAllUnHandlerErrors = useCallback ( () => (promiseRejectedEvent: {reason: any}): void => {
-        cycleAlert({message: promiseRejectedEvent.reason.message, type: 'error'})
+        cycleAlert({message: promiseRejectedEvent.reason.message, type: "error"})
     }, [cycleAlert])
 
     useLayoutEffect(() => {
@@ -75,8 +67,19 @@ const mapStateToProps = (state: RootState): StateToPopsType => ({
     initialize: getInitialize(state),
 })
 
-export const App = compose(
+const AppWrapper = compose(
     connect(mapStateToProps, {
         setInitialize, cycleAlert
     }),
 )(AppContainer)
+
+
+export const App = () => {
+    return (
+        <React.StrictMode>
+            <Provider store={store}>
+                <AppWrapper />
+            </Provider>
+        </React.StrictMode>
+    )
+}

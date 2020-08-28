@@ -2,8 +2,8 @@
 import React, { memo, FC } from "react"
 import {connect} from "react-redux"
 import { compose } from "redux"
-// Reducer
-import { login } from "../../reducer/auth-reducer"
+// Thunk
+import { login } from "../../thunks/auth-thunk"
 // Selector
 import { getCaptcha, getIsAuth } from "../../selectors/auth-selector"
 // Components
@@ -33,7 +33,7 @@ const mapStateToProps = (state: RootState): StateToPopsType => ({
     captcha: getCaptcha(state)
 })
 
-const LoginContainer = compose(
+const LoginContainer = compose<StateToPopsType & DispatchToPopsType>(
     connect(mapStateToProps, {login})
 )(LoginWrapperContainer)
 

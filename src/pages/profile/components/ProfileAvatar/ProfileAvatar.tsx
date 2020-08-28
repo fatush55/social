@@ -14,7 +14,7 @@ import { ProfileType } from "../../../../types/types"
 
 type PropsType = {
     profile: ProfileType | null
-    handlerUpdatePhoto: (file: object) => void
+    handlerUpdatePhoto: (file: File) => void
     idAuth: number | null
 }
 

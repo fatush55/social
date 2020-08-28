@@ -21,7 +21,7 @@ export const Header: FC<PropsType> = ({myProfile, isAuth, handlerLogOut}) => {
                 isAuth && myProfile
                     ? <>
                         <NavLink to={`/profile`} className={style.item} >
-                            <img className={style.itemImg} src={myProfile.photos ? myProfile.photos.small : defaultImg }  alt=''/>
+                            <img className={style.itemImg} src={myProfile && myProfile.photos && myProfile.photos.small ? myProfile.photos.small : defaultImg }  alt=''/>
                             {myProfile.login}
                         </NavLink>
                         <div className={`${style.item} ${style.itemBtn}`} onClick={handlerLogOut}>

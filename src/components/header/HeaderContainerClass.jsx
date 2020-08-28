@@ -2,7 +2,7 @@
 import React , { Component } from "react"
 import { connect } from "react-redux"
 // Reducer
-import { logout } from "../../reducer/auth-reducer"
+import { logout } from "../../reducers/auth-reducer"
 // Selector
 import {  getMyProfile, getIsAuth } from "../../selectors/auth-selector"
 // Components

@@ -2,8 +2,8 @@
 import React, { useEffect, memo, FC } from "react"
 import { connect } from "react-redux"
 import { compose } from "redux"
-// Reducer
-import { requestUsers, setFollow, setCurrencyPage } from "../../reducer/user-reducer"
+// Thunk
+import { requestUsers, setFollow, editCurrencyPage } from "../../thunks/user-thunk"
 // Selectors
 import {
     getUser, getCurrentPage, getSizePage, getFollowProgress, getIsLoading, getTotalUsers,
@@ -29,14 +29,15 @@ type StateToPopsType = {
 type DispatchToPopsType = {
     requestUsers: (currentPage: number, sizePage: number) => void
     setFollow: (id: number, users: Array<UsersType>) => void
-    setCurrencyPage: (page: number) => void
+    editCurrencyPage: (page: number) => void
 }
 
 
 const UserWrapperContainer: FC<StateToPopsType & DispatchToPopsType> = memo((props) => {
-    const {requestUsers, setCurrencyPage, sizePage, currentPage, setFollow, users} = props
-    const handlerSetCurrencyPage = (page: number) => setCurrencyPage(page)
-    const handlerFallowed = (id: number) =>  setFollow(id, users)
+    const {requestUsers, editCurrencyPage, sizePage, currentPage, setFollow, users} = props
+    const handlerSetCurrencyPage = (page: number) => editCurrencyPage(page)
+    const handlerFallowed = (id: number) => setFollow(id, users)
+
 
     useEffect(() => {
         requestUsers(currentPage, sizePage)
@@ -63,6 +64,6 @@ const mapStateToProps = (state: RootState): StateToPopsType => {
     }
 }
 
-export const UserContainer = compose(
-    connect(mapStateToProps, {requestUsers, setFollow, setCurrencyPage})
+export const UserContainer = compose<StateToPopsType & DispatchToPopsType>(
+    connect(mapStateToProps, {requestUsers, setFollow, editCurrencyPage})
 )(UserWrapperContainer)

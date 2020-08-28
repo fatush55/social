@@ -5,7 +5,7 @@ import React, {createRef, FC, useEffect} from "react"
 import style from "./MessageList.module.css"
 // Components
 import { Message } from "../../../components/message/Message"
-import { WriteAreaForm } from "../../../formik/form/comment/WriteAreaForm"
+import { WriteAreaForm } from "../../../formik/form/write-area-form/WriteAreaForm"
 // TYpe
 import { MessageType } from "../../../types/dialog-reduser-type"
 import { MatchType } from "../../../types/types"

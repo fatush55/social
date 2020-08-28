@@ -1,10 +1,8 @@
 // Type
 import { MessageType, UsersDialogType } from "../types/dialog-reduser-type"
+import { ActionsCreatorType } from "../store";
+import { actionsDialog } from "../actions/dialog-action";
 
-
-const baseType = 'dialog/'
-const SUBMIT_MESSAGE = `${baseType}SUBMIT_MESSAGE`
-const DELETE_MESSAGE = `${baseType}DELETE_MESSAGE`
 
 const initialState = {
     messages: [
@@ -265,10 +263,11 @@ const initialState = {
 }
 
 type InitialStateType = typeof initialState
+export type ActionReducerType = ActionsCreatorType<typeof actionsDialog>
 
-export const dialogReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
+export const dialogReducer = (state: InitialStateType = initialState, action: ActionReducerType): InitialStateType => {
     switch (action.type) {
-    case SUBMIT_MESSAGE:
+    case 'DIALOG/SUBMIT_MESSAGE':
             const date = new Date()
 
             return  {
@@ -292,7 +291,7 @@ export const dialogReducer = (state: InitialStateType = initialState, action: an
                     return elem
                 })
             }
-    case DELETE_MESSAGE:
+    case 'DIALOG/DELETE_MESSAGE':
         return {
             ...state,
             messages: state.messages.map(elem => {
@@ -305,21 +304,6 @@ export const dialogReducer = (state: InitialStateType = initialState, action: an
                 return elem
             })
         }
-        default:
-            return state
+        default: return state
     }
 }
-
-// Action Creator
-type SubmitMessageActionType = {
-    type: typeof SUBMIT_MESSAGE
-    id: number,
-    message: string
-}
-export const submitMessage = (id: number, message: string): SubmitMessageActionType => ({type: SUBMIT_MESSAGE, id, message})
-type DeleteMessageActionType = {
-    type: typeof DELETE_MESSAGE
-    userId: string,
-    messageId: number
-}
-export const deleteMessage = (userId: string, messageId: number): DeleteMessageActionType => ({type: DELETE_MESSAGE, userId, messageId})

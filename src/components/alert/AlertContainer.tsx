@@ -2,7 +2,7 @@
 import React, { FC } from "react"
 import { connect } from "react-redux"
 // Reducers
-import { setHiddenAlert } from "../../reducer/app-reducer"
+import { setHiddenAlert } from "../../thunks/app-thunk"
 // Selectors
 import { getAlert, getHiddenAlert } from "../../selectors/app-selector"
 // Components

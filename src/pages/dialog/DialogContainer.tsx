@@ -5,8 +5,8 @@ import { withRouter } from "react-router"
 import { compose } from "redux"
 // HOC
 import { withAuthRedirect } from "../../HOC/withAuthRedirect"
-// Reducer
-import { submitMessage } from "../../reducer/dialog-reducer"
+// Thunk
+import { submitMessage } from "../../thunks/dialog-thunk"
 // Selector
 import { getUsers, getMessages } from "../../selectors/dialog-selector"
 // Components
@@ -15,7 +15,6 @@ import { RootState } from "../../store"
 // Type
 import { MessageType, UsersDialogType } from "../../types/dialog-reduser-type"
 import { MatchType } from "../../types/types"
-
 
 
 type StateToPopsType = {
@@ -44,10 +43,11 @@ const mapStateToProps = (state: RootState): StateToPopsType => {
     }
 }
 
-const DialogContainer = compose(
+const DialogContainer = compose<StateToPopsType & DispatchToPopsType & OwnToPopsType>(
     withRouter,
     connect(mapStateToProps, {submitMessage}),
     withAuthRedirect,
 )(DialogWrapperContainer)
+
 
 export default DialogContainer

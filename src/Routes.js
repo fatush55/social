@@ -1,6 +1,6 @@
 // Root
 import React, { lazy } from "react"
-import { Switch, Route } from "react-router-dom"
+import { Switch, Route, } from "react-router-dom"
 // HOC
 import { withSuspense } from "./HOC/withSuspense"
 // Pages
@@ -9,11 +9,11 @@ import { UserContainer } from "./pages/user/UserContainer";
 // import {TestPageContainer} from "./pages/test/TestPageContainer";
 
 // Laze Pages
-const DialogContainer = lazy(() => import("./pages/dialog/DialogContainer"));
-const LoginContainer = lazy(() => import("./pages/login/LoginContainer"));
+const DialogContainer = lazy(() => import("./pages/dialog/DialogContainer"))
+const LoginContainer = lazy(() => import("./pages/login/LoginContainer"))
 
 
-export const Routes  = () => {
+export const Routes = () => {
     return (
         <Switch>
             <Route path='/' render={() => <ProfileContainer/>} exact />

@@ -26,7 +26,6 @@ export const WriteAreaForm:FC<PropsType & Values> = ({handlerSubmit, message}) =
                     values: Values,
                     action
                 ) => {
-                    console.log(values)
                     handlerSubmit(values)
                     action.resetForm({})
                     action.setSubmitting(false)

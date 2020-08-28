@@ -13,3 +13,9 @@ export type AuthDataType = {
     id?: null | number
     photos?: null | PhotosType
 }
+
+export type AuthMeType = {
+    id: number
+    email: string
+    login: string
+}

@@ -6,7 +6,7 @@ import { compose } from "redux"
 // HOC
 import { withAuthRedirect } from "../../HOC/withAuthRedirect"
 // Reducer
-import { addComment, requestProfile, requestStatus, upDataStatus} from "../../reducer/profile-reducer"
+import { addComment, requestProfile, requestStatus, upDataStatus} from "../../reducers/profile-reducer"
 // Selector
 import {  getIsLoading, getStatus, getProfile, getComments } from "../../selectors/profile-selector"
 import {  getMyProfile } from "../../selectors/auth-selector"

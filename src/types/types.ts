@@ -1,13 +1,13 @@
 export type PhotosType = {
-    small: string
-    large: string
+    small: string | null
+    large: string | null
 }
 
 export type UsersType = {
     id: number
     name: string
     status: string | null
-    photos: null | PhotosType
+    photos: PhotosType
     followed: boolean
     uniqueUrlName?: null
 }

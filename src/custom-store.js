@@ -1,6 +1,6 @@
 // Reducer
-import { profileReducer } from "./reducer/profile-reducer"
-import { dialogReducer } from "./reducer/dialog-reducer"
+import { profileReducer } from "./reducers/profile-reducer"
+import { dialogReducer } from "./reducers/dialog-reducer"
 
 export const customStore = {
     _state: {
