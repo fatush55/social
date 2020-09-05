@@ -12,9 +12,9 @@ import { MatchType } from "../../../types/types"
 
 
 type OwnToPopsType = {
+    match: MatchType,
     messages: Array<MessageType>
     handlerMessage: (id: number, message: string) => void
-    match: MatchType
 }
 
 type Values = {
@@ -24,7 +24,7 @@ type Values = {
 export const MessageList: FC<OwnToPopsType> = ({messages, handlerMessage, match}) => {
     const idUser = match.params.idUser ? Number(match.params.idUser) : 1
     const container = createRef<HTMLDivElement>()
-    const handlerSubmit = (form: Values) =>  handlerMessage(idUser, form.message)
+    const handlerAction = (message: string) =>  handlerMessage(idUser, message)
 
     useEffect(() => {
         const cont = container.current
@@ -41,7 +41,7 @@ export const MessageList: FC<OwnToPopsType> = ({messages, handlerMessage, match}
                     }
                 </div>
             </div>
-            <WriteAreaForm handlerSubmit={handlerSubmit} message='' />
+            <WriteAreaForm handlerAction={handlerAction} />
         </div>
     )
 }

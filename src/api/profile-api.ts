@@ -9,7 +9,7 @@ export const profileApi = {
     getStatus(id: number) {
         return instance.get<string>(`profile/status/${id}`).then(res => res.data)
     },
-    upDataStatus(status: string) {
+    updateStatus(status: string) {
         return instance.put<ResponseApiType>(`profile/status`, {status}).then(res => res.data)
     },
     updatePhotos(fileData: File) {

@@ -1,25 +1,30 @@
 // Root
-import React, { FC } from "react"
-import { NavLink } from "react-router-dom"
+import React, {FC, memo} from "react"
+import {NavLink} from "react-router-dom"
+import {useSelector} from "react-redux"
 import classes from "classnames"
 // Style
 import style from "./UserCart.module.css"
 // Assets
 import defaultUserImg from "../../assets/img/default-user.jpg"
 // Components
-import { MiniLoader } from "../../commons/miniLoader/MiniLoader";
+import {MiniLoader} from "../../commons/miniLoader/MiniLoader"
+// Selector
+import {getProfile} from "../../selectors/profile-selector"
 // Type
-import { ProfileType, UsersType } from "../../types/types"
+import {UsersType} from "../../types/types"
+import {getFollowProgress} from "../../selectors/users-selector";
 
 
 type PropsType = {
     user: UsersType
     fallowUser: (id: number) => void
-    followProgress: Array<number>
-    profile: null | ProfileType
 }
 
-export const UserCart: FC<PropsType> = ({user, fallowUser, followProgress, profile}) => {
+export const UserCart: FC<PropsType> = memo(({user, fallowUser}) => {
+    const profile = useSelector(getProfile)
+    const followProgress = useSelector(getFollowProgress)
+
     const isDisabled = followProgress.some(id => id === user.id)
     const classesRoot = classes(
         style.root, {[style.activeProf]: profile && profile.userId === user.id}, user.followed ? style.fallowed : style.unFallowed,
@@ -46,4 +51,4 @@ export const UserCart: FC<PropsType> = ({user, fallowUser, followProgress, profi
             </div>
         </div>
     )
-}
+})

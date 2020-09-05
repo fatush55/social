@@ -1,13 +1,8 @@
-// Api
-import {ResponseResultCodeType} from "../api/api"
-import { profileApi } from "../api/profile-api"
-// Reducer
-import { cycleAlert, setCurrentProfile } from "../thunks/app-thunk"
-import { setMyPhoto } from "../thunks/auth-thunk"
+// Action
+import { actionsProfile } from "../actions/profile-action"
 // Type
 import { ProfileType, CommentType } from "../types/types"
-import { ActionsCreatorType, RootThunkCreatorType } from "../store"
-import { actionsProfile } from "../actions/profile-action"
+import { ActionsCreatorType } from "../store"
 
 
 const initialState = {
@@ -47,7 +42,7 @@ const initialState = {
 }
 
 type initialStateType = typeof initialState
-export type ActionReducerType = ActionsCreatorType<typeof actionsProfile>
+export type ActionReducerType = ActionsCreatorType<typeof actionsProfile >
 
 export const profileReducer = (state: initialStateType = initialState, action: ActionReducerType): initialStateType => {
     switch (action.type) {

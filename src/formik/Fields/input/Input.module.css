@@ -43,7 +43,7 @@
 .icon {
     position: absolute;
     top: 6px;
-    left: calc(75% + 5px);
+    left: calc(75% - 5px);
     font-size: 20px;
 }
 

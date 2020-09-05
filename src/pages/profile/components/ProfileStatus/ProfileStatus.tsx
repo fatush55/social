@@ -2,22 +2,27 @@
 import React, { useState, useEffect, FC } from "react"
 // Style
 import style from "./ProfileStatus.module.css"
+import {updateStatus} from "../../../../thunks/profile-thunk";
+import {useDispatch, useSelector} from "react-redux";
+import {getStatus} from "../../../../selectors/profile-selector";
 
 
 type PropsType = {
-    status: string | null
-    upDateStatus: (status: string) => void
     idAuth: number | null
     userId: number | null | undefined
 }
 
-export const  ProfileStatus: FC<PropsType> = ({status, upDateStatus, idAuth, userId}) => {
+export const  ProfileStatus: FC<PropsType> = ({idAuth, userId}) => {
+    const dispatch = useDispatch()
+    const status = useSelector(getStatus)
+
     const [editMode, setEditMode] = useState(false)
     const [isStatus, setIsStatus] = useState(status)
+
     const triggerMode = () => {
         if (idAuth === userId) {
             setEditMode(!editMode)
-            isStatus && isStatus.length && editMode && upDateStatus(isStatus)
+            isStatus && isStatus.length && editMode && dispatch(updateStatus(isStatus))
         }
     }
 

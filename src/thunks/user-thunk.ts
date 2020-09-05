@@ -10,12 +10,17 @@ import { ActionReducerType } from "../reducers/user-reducer"
 
 type ThunkCreatorType = RootThunkCreatorType<ActionReducerType>
 
-export const requestUsers = (currentPage: number, sizePage: number): ThunkCreatorType => async (dispatch) => {
+export const requestUsers = (currentPage: number, sizePage: number, search: string = '', typeSearch: string = 'all'): ThunkCreatorType => async (dispatch) => {
     dispatch(actionsUser.triggerLoading(true))
-    const data = await userApi.getUsers(currentPage, sizePage)
+    const data = await userApi.getUsers(currentPage, sizePage, search, typeSearch)
     dispatch(actionsUser.setUsers(data.items))
     dispatch(actionsUser.setTotalUsers(data.totalCount))
     dispatch(actionsUser.triggerLoading(false))
+}
+
+export const setSearchUser = (search: string, type: string): ThunkCreatorType => (dispatch) => {
+    dispatch(actionsUser.setSearchUser(search, type))
+    dispatch(actionsUser.setCurrencyPage(1))
 }
 
 export const setFollow = (id: number, users: Array<any>): ThunkCreatorType => async (dispatch) => {

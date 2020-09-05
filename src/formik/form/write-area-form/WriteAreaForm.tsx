@@ -1,10 +1,10 @@
 // Root
-import React, { FC } from 'react'
-import { Formik, Form } from 'formik'
+import React, {FC} from 'react'
+import {Form, Formik, FormikHelpers} from 'formik'
 // Style
 import style from "./WriteAreaForm..module.css"
 // Component
-import { CreteField } from '../../CreateField/CreateField'
+import {CreteField} from '../../CreateField/CreateField'
 
 
 type Values = {
@@ -12,24 +12,25 @@ type Values = {
 }
 
 interface PropsType {
-    handlerSubmit: (form: Values) => void
+    handlerAction: (message: string) => void
 }
 
-export const WriteAreaForm:FC<PropsType & Values> = ({handlerSubmit, message}) => {
+export const WriteAreaForm:FC<PropsType> = ({handlerAction}) => {
+    const initialValues = {
+        message: ''
+    }
+
+    const handlerSubmit = (values: Values, action: FormikHelpers<Values>) => {
+        action.resetForm({})
+        action.setSubmitting(false)
+        handlerAction(values.message)
+    }
+
     return (
         <div>
             <Formik
-                initialValues={{
-                    message: message
-                }}
-                onSubmit={(
-                    values: Values,
-                    action
-                ) => {
-                    handlerSubmit(values)
-                    action.resetForm({})
-                    action.setSubmitting(false)
-                }}
+                initialValues={initialValues}
+                onSubmit={handlerSubmit}
             >
                 {({ errors, touched, values}) => (
                     <Form className={style.root}>

@@ -1,14 +1,8 @@
-// Api
-import { profileApi } from "../api/profile-api"
-import { authApi } from "../api/auth-api";
-import { securityApi } from "../api/security-api"
 // Action
-import { actionsAuth } from "../actions/auth-action"
+import {actionsAuth} from "../actions/auth-action"
 // Type
-import { PhotosType } from "../types/types"
-import { LoginValue, AuthDataType } from "../types/auth-reducer-type"
-import {ActionsCreatorType, RootThunkCreatorType} from "../store"
-import { ResponseResultCodeForCaptchaType, ResponseResultCodeType } from "../api/api"
+import {AuthDataType} from "../types/auth-reducer-type"
+import {ActionsCreatorType} from "../store"
 
 
 const initialState = {

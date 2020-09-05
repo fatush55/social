@@ -1,48 +1,57 @@
 // Root
-import React, { FC } from 'react'
-import { Formik, Form, FormikHelpers } from 'formik'
+import React, {FC} from 'react'
+import {Form, Formik, FormikHelpers} from 'formik'
 import * as Yup from 'yup'
 // Style
 import style from "./LoginForm.module.css"
 // Components
-import { CreteField } from '../../CreateField/CreateField'
+import {CreteField} from '../../CreateField/CreateField'
 // Type
-import { LoginValue } from '../../../types/auth-reducer-type'
+import {LoginValue} from '../../../types/auth-reducer-type'
+import {useDispatch, useSelector} from "react-redux";
+import {getCaptcha} from "../../../selectors/auth-selector";
+import {login} from '../../../thunks/auth-thunk'
 
 
-const SignupSchema = Yup.object().shape({
-    email: Yup.string()
-        .email('Invalid email')
-        .required('Required'),
-    password: Yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('Required'),
-});
+export const LoginForm:FC = () => {
+    const dispatch = useDispatch()
+    const captcha = useSelector(getCaptcha)
 
-interface PropsType {
-    handlerSubmit: (form: LoginValue) => void
-}
+    const SignupSchema = Yup.object().shape({
+        email: Yup.string()
+            .email('Invalid email')
+            .required('Required'),
+        password: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        captcha: captcha ? Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required') : Yup.string(),
+    })
 
-export const LoginForm:FC<PropsType & LoginValue> = ({handlerSubmit, captcha, email, password, rememberMy}) => {
+    const initialValues = {
+        email: '',
+        password: '',
+        rememberMy: true,
+        captcha: captcha,
+    }
+
+    const handlerSubmit = ( values: LoginValue, { setSubmitting, setErrors, resetForm }: FormikHelpers<LoginValue>) => {
+        const errors = dispatch(login({...values}))
+        // @ts-ignore
+        errors.then((data: any) => data && setErrors({password: 'error', captcha: 'error', email: 'error'}))
+        setSubmitting(false)
+    }
+
     return (
         <div className={style.root}>
             <h1>Log In</h1>
             <Formik
-                initialValues={{
-                    email: email,
-                    password: password,
-                    rememberMy: rememberMy,
-                    captcha: captcha,
-                }}
+                initialValues={initialValues}
                 validationSchema={SignupSchema}
-                onSubmit={(
-                     values: LoginValue,
-                    { setSubmitting }: FormikHelpers<LoginValue>
-                ) => {
-                    handlerSubmit(values)
-                    setSubmitting(false)
-                }}
+                onSubmit={handlerSubmit}
             >
                 {({ errors, touched}) => (
                     <Form className={style.form}>
@@ -80,8 +89,8 @@ export const LoginForm:FC<PropsType & LoginValue> = ({handlerSubmit, captcha, em
                                     name="captcha"
                                     component='input'
                                     placeholder="symbol"
-                                    error={errors.rememberMy}
-                                    touched={touched.rememberMy}
+                                    error={errors.captcha}
+                                    touched={touched.captcha}
                                 />
                             </>
                         }

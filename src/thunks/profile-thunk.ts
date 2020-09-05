@@ -33,34 +33,39 @@ export const requestStatus = (id: number): ThunkCreatorType => async (dispatch) 
 
 export const requestUpdatePhotos = (fileData: File): ThunkCreatorType => async (dispatch) => {
     const data = await profileApi.updatePhotos(fileData)
+
     if (data.resultCode === ResponseResultCodeType.success) {
+        dispatch(cycleAlert({message: 'successful update Avatar', type: 'success'}))
         dispatch(actionsProfile.updatePhotos(data.data.photos))
         dispatch(setMyPhoto(data.data.photos))
     }
 }
 
-export const requestUpdateProfile = (profileData: ProfileType): ThunkCreatorType => (dispatch) => {
+export const requestUpdateProfile = (profileData: ProfileType): ThunkCreatorType => async (dispatch) => {
     dispatch(actionsProfile.triggerStatusUpdateProfile(false))
-    profileApi.updateProfile(profileData).then((data: any) => {
-        if (data.resultCode === ResponseResultCodeType.success) {
-            dispatch(actionsProfile.setProfile(profileData))
-            dispatch(actionsProfile.triggerStatusUpdateProfile(true))
-            dispatch(cycleAlert({message: 'successful update Profile', type: 'success'}))
-        } else {
+    const data = await profileApi.updateProfile(profileData)
 
-        }
-    })
+    if (data.resultCode === ResponseResultCodeType.success) {
+        dispatch(cycleAlert({message: 'successful update ProfileContainer', type: 'success'}))
+        dispatch(actionsProfile.setProfile(profileData))
+        dispatch(actionsProfile.triggerStatusUpdateProfile(true))
+    } else if (data.resultCode === ResponseResultCodeType.error) {
+        return prepareError(data.messages)
+    }
 }
 
-export const upDataStatus = (status: string): ThunkCreatorType => async (dispatch) => {
-    const data = await profileApi.upDataStatus(status)
-    if (data.resultCode === ResponseResultCodeType.success) dispatch(actionsProfile.setStatus(status))
+export const updateStatus = (status: string): ThunkCreatorType => async (dispatch) => {
+    const data = await profileApi.updateStatus(status)
+    if (data.resultCode === ResponseResultCodeType.success) {
+        dispatch(cycleAlert({message: 'successful update Status', type: 'success'}))
+        dispatch(actionsProfile.setStatus(status))
+    }
 }
 
-// Helpers
-// const prepareError = (messages: Array<string>): object => {
-//     const data = {contacts: {} as any}
-//     const regexp = /\([a-zA-Z]+->([a-zA-Z]+)\)/ as any;
-//     messages.forEach(elem => data.contacts[regexp.exec(elem)[1].toLocaleLowerCase()] = 'Invalid url')
-//     return data;
-// }
+//Helpers
+const prepareError = (messages: Array<string>): object => {
+    const data = {contacts: {} as any}
+    const regexp = /\([a-zA-Z]+->([a-zA-Z]+)\)/ as any;
+    messages.forEach(elem => data.contacts[regexp.exec(elem)[1].toLocaleLowerCase()] = 'Invalid url')
+    return data;
+}

@@ -49,5 +49,4 @@ const DialogContainer = compose<StateToPopsType & DispatchToPopsType & OwnToPops
     withAuthRedirect,
 )(DialogWrapperContainer)
 
-
 export default DialogContainer

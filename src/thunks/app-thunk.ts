@@ -10,15 +10,14 @@ import { ActionReducerType } from "../reducers/app-reducer"
 
 type ThunkCreatorType = RootThunkCreatorType<ActionReducerType>
 
-export const setInitialize = () => async (dispatch: any) => {
+export const setInitialize = (): ThunkCreatorType => async (dispatch: any) => {
     const promiseGetAuth = await dispatch(getAuth())
 
-    Promise.all([promiseGetAuth]).then(() => {
-        dispatch(actionsApp.triggerInitialize())
-    })
+    const isProcessFinish = await Promise.all([promiseGetAuth]).then(() => true)
+    isProcessFinish && dispatch(actionsApp.triggerInitialize())
 }
 
-export const cycleAlert = (message: AlertType): ThunkCreatorType =>(dispatch) => {
+export const cycleAlert = (message: AlertType): ThunkCreatorType => (dispatch) => {
     dispatch(actionsApp.setAlert(message))
     dispatch(actionsApp.setHiddenAlert('show'))
     setTimeout(() =>  dispatch(actionsApp.setHiddenAlert('hide')), 3000)

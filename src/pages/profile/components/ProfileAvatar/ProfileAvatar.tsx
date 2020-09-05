@@ -1,5 +1,6 @@
 // Root
 import React, {FC} from "react"
+import {useDispatch} from "react-redux"
 // FontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFileImage } from "@fortawesome/free-solid-svg-icons"
@@ -9,16 +10,19 @@ import defaultImg from "../../../../assets/img/default-user.jpg"
 import style from "./ProfileAvatar.module.css"
 // Type
 import { ProfileType } from "../../../../types/types"
+import {requestUpdatePhotos} from "../../../../thunks/profile-thunk";
 
 
 
 type PropsType = {
     profile: ProfileType | null
-    handlerUpdatePhoto: (file: File) => void
     idAuth: number | null
 }
 
-export const ProfileAvatar: FC<PropsType> = ({profile, handlerUpdatePhoto, idAuth}) => {
+export const ProfileAvatar: FC<PropsType> = ({profile, idAuth}) => {
+    const dispatch = useDispatch()
+    const handlerUpdatePhoto = (file: File) => dispatch(requestUpdatePhotos(file))
+
     return (
         <div className={style.avatar}>
             <div>

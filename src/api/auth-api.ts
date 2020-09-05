@@ -7,10 +7,7 @@ export const authApi = {
     },
     login(email: string, password: string, rememberMy = false, captcha: null | string = null) {
         return instance.post<ResponseApiType<{}, ResponseResultCodeForCaptchaType>>('auth/login', {
-            email,
-            password,
-            rememberMy,
-            captcha
+            email, password, rememberMy, captcha
         }).then(data => data.data)
     },
     logout() {

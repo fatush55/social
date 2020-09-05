@@ -11,7 +11,7 @@ import { addComment, requestProfile, requestStatus, upDataStatus} from "../../re
 import {  getIsLoading, getStatus, getProfile, getComments } from "../../selectors/profile-selector"
 import {  getMyProfile } from "../../selectors/auth-selector"
 // Components
-import { Profile } from "./Profile"
+import { ProfileContainer } from "./ProfileContainer"
 
 
 class ProfileApiContainer extends Component {
@@ -28,7 +28,7 @@ class ProfileApiContainer extends Component {
     }
 
     render() {
-        return <Profile {...this.props} upDateStatus={this.handlerUpDateStatus} />
+        return <ProfileContainer {...this.props} upDateStatus={this.handlerUpDateStatus} />
     }
 }
 

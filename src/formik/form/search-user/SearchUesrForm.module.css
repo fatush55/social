@@ -1,0 +1,18 @@
+.root {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.searchItem {
+    position: absolute;
+    font-size: 25px;
+    color: rgb(138,43,226);
+    top: 17px;
+    left: 15px;
+}
+
+.input {
+    width: 500px;
+    padding: 10px 180px 10px 100px;
+}

@@ -1,20 +1,22 @@
 // Root
-import React, { FC } from "react"
+import React, {FC, memo} from "react"
 import classes from "classnames"
 // Style
 import style from "./PaginationItem.module.css"
+import {useDispatch} from "react-redux";
+import {editCurrencyPage} from "../../thunks/user-thunk";
 
 
 type PropsType = {
     id: number
     active: boolean
-    setCurrencyPage: (id: number) => void
     defaultValue?: number
     countPages: number
 }
 
-export const PaginationItem: FC<PropsType> = ({id, active, setCurrencyPage, countPages, defaultValue = false}) => {
-    const handlerCurrencyPage = () => countPages !== id && setCurrencyPage(id)
+export const PaginationItem: FC<PropsType> = memo(({id, active, countPages, defaultValue = false}) => {
+    const dispatch = useDispatch()
+    const handlerCurrencyPage = () => (countPages + 1) !== id && dispatch(editCurrencyPage(id))
 
     return (
         <div
@@ -28,4 +30,4 @@ export const PaginationItem: FC<PropsType> = ({id, active, setCurrencyPage, coun
             </span>
         </div>
     )
-}
+})

@@ -1,10 +1,8 @@
-// Api
-import { ResponseResultCodeType } from "../api/api"
-import { userApi } from "../api/user-api"
+// Action
+import { actionsUser } from "../actions/user-action"
 // Type
 import { UsersType } from "../types/types"
-import { ActionsCreatorType, RootThunkCreatorType } from "../store"
-import { actionsUser } from "../actions/user-action"
+import { ActionsCreatorType } from "../store"
 
 
 const initialState = {
@@ -12,6 +10,7 @@ const initialState = {
     followProgress: [] as Array<number>, // users id
     currentPage: 1 as number,
     sizePage: 20 as number,
+    searchUser: {search: '', type: 'all'},
     totalUsers: null as number | null,
     isLoading: false as boolean,
 }
@@ -48,6 +47,11 @@ export const userReducer = (state: InitialStateType = initialState, action: Acti
             return {
                 ...state,
                 currentPage: action.page,
+            }
+        case "USER/SET_SEARCH_USER":
+            return {
+                ...state,
+                searchUser: action.payload,
             }
         case "USER/TRIGGER_LOADING":
             return {

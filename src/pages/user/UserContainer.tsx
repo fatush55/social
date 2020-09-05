@@ -1,69 +1,62 @@
 // Root
-import React, { useEffect, memo, FC } from "react"
-import { connect } from "react-redux"
-import { compose } from "redux"
-// Thunk
-import { requestUsers, setFollow, editCurrencyPage } from "../../thunks/user-thunk"
-// Selectors
-import {
-    getUser, getCurrentPage, getSizePage, getFollowProgress, getIsLoading, getTotalUsers,
-} from "../../selectors/users-selector"
-import { getProfile } from "../../selectors/profile-selector"
+import React, {FC, memo, useEffect} from "react"
+import {useDispatch, useSelector} from "react-redux"
+// Style
+import style from "./User.module.css"
 // Components
-import { User } from "./User"
-// Type
-import { ProfileType, UsersType } from "../../types/types"
-import { RootState } from "../../store"
+import {UserCart} from "../../components/userCart/UserCart"
+import {Pagination} from "../../components/pagination/Pagination"
+import {Loader} from "../../commons/loader/Loader"
+// Thunk
+import {requestUsers, setFollow} from "../../thunks/user-thunk"
+// Selector
+import {getCurrentPage, getIsLoading, getSizePage, getUser, getSearchUsers} from "../../selectors/users-selector"
+import { SearchUserForm } from "../../formik/form/search-user/SearchUserForm"
 
 
-type StateToPopsType = {
-    users: Array<UsersType>
-    currentPage: number
-    sizePage: number
-    totalUsers: number | null,
-    isLoading: boolean
-    followProgress: Array<number>
-    profile: null |ProfileType
-}
+export const UserContainer: FC = memo(() => {
+    const users = useSelector(getUser)
+    const isLoading = useSelector(getIsLoading)
+    const currentPage = useSelector(getCurrentPage)
+    const searchUsers = useSelector(getSearchUsers)
+    const sizePage = useSelector(getSizePage)
 
-type DispatchToPopsType = {
-    requestUsers: (currentPage: number, sizePage: number) => void
-    setFollow: (id: number, users: Array<UsersType>) => void
-    editCurrencyPage: (page: number) => void
-}
-
-
-const UserWrapperContainer: FC<StateToPopsType & DispatchToPopsType> = memo((props) => {
-    const {requestUsers, editCurrencyPage, sizePage, currentPage, setFollow, users} = props
-    const handlerSetCurrencyPage = (page: number) => editCurrencyPage(page)
-    const handlerFallowed = (id: number) => setFollow(id, users)
-
+    const dispatch = useDispatch()
+    const fallowUser = (id: number) => dispatch(setFollow(id, users))
 
     useEffect(() => {
-        requestUsers(currentPage, sizePage)
-    }, [currentPage, sizePage, requestUsers])
+       dispatch(requestUsers(currentPage, sizePage, searchUsers.search, searchUsers.type))
+    }, [currentPage, sizePage, dispatch, searchUsers.type, searchUsers.search])
 
     return (
-        <User
-            {...props}
-            setCurrencyPage={handlerSetCurrencyPage}
-            fallowUser={handlerFallowed}
-        />
+        <div className={style.root}>
+            {
+                isLoading
+                    ? <Loader/>
+                    : <>
+                        <div className={style.search}>
+                            <SearchUserForm searchUsers={searchUsers} />
+                        </div>
+                        <div className={style.container}>
+                            {
+                                users.map(elem =>
+                                    <UserCart
+                                        key={elem.id}
+                                        user={elem}
+                                        fallowUser={fallowUser}
+                                    />
+                                )
+                            }
+                        </div>
+                        <div className={style.pagination}>
+                            <Pagination
+                                currentPage={currentPage}
+                                sizePage={sizePage}
+                                sizePortions={10}
+                            />
+                        </div>
+                    </>
+            }
+        </div >
     )
 })
-
-const mapStateToProps = (state: RootState): StateToPopsType => {
-    return {
-        users: getUser(state),
-        currentPage: getCurrentPage(state),
-        sizePage: getSizePage(state),
-        totalUsers: getTotalUsers(state),
-        isLoading: getIsLoading(state),
-        followProgress: getFollowProgress(state),
-        profile: getProfile(state)
-    }
-}
-
-export const UserContainer = compose<StateToPopsType & DispatchToPopsType>(
-    connect(mapStateToProps, {requestUsers, setFollow, editCurrencyPage})
-)(UserWrapperContainer)

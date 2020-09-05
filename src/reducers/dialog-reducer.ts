@@ -1,7 +1,8 @@
+// Action
+import { actionsDialog } from "../actions/dialog-action"
 // Type
 import { MessageType, UsersDialogType } from "../types/dialog-reduser-type"
 import { ActionsCreatorType } from "../store";
-import { actionsDialog } from "../actions/dialog-action";
 
 
 const initialState = {
