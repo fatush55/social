@@ -12,7 +12,7 @@ import {SelectorSearchUserFrom} from "./components/SelectorSearchUserFrom"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faSearch} from "@fortawesome/free-solid-svg-icons"
 import {AutoSubmit} from "../../AutoSubmit";
-import {setSearchUser} from '../../../thunks/user-thunk'
+import {setSearchUser, editCurrencyPage} from '../../../thunks/user-thunk'
 
 
 type FormValue = {
@@ -35,6 +35,7 @@ export const SearchUserForm: FC<PropsType> = memo(({searchUsers}) => {
         { setSubmitting }: FormikHelpers<FormValue>
     ) => {
         dispatch(setSearchUser(values.search_user, isTypeSearch))
+        dispatch(editCurrencyPage(1))
         setSubmitting(false)
 
     }

@@ -48,6 +48,11 @@ export const userReducer = (state: InitialStateType = initialState, action: Acti
                 ...state,
                 currentPage: action.page,
             }
+        case "USER/SET_SIZE_PAGE":
+            return {
+                ...state,
+                sizePage: action.size,
+            }
         case "USER/SET_SEARCH_USER":
             return {
                 ...state,

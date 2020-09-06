@@ -1,24 +1,17 @@
-.root {
+.infoContainer {
+    width: 50%;
+}
+
+.comment::-webkit-scrollbar {
+    width: 0;
+}
+
+.profileInfo {
+    position: relative;
+    width: 100%;
     display: flex;
-    height: calc(100vh);
-    background: rgba(0,0,0,0.8);
-}
-
-.showMode{
-    transform: scale(0.8);
-    opacity: 0;
-    animation: show 0.5s forwards;
-}
-
-@keyframes show {
-    0% {
-        transform: scale(0.8);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+    flex-direction: column;
+    margin-top: 60px;
 }
 
 .editMode {
@@ -38,31 +31,21 @@
     }
 }
 
-.infoContainer {
-    width: 50%;
+.showMode{
+    transform: scale(0.8);
+    opacity: 0;
+    animation: show 0.5s forwards;
 }
 
-.commentContainer {
-    width: 50%;
-}
-
-.comment {
-    margin-top: 50px;
-    margin-bottom: 10px;
-    height: calc(100vh - 190px);
-    overflow-y: auto;
-}
-
-.comment::-webkit-scrollbar {
-    width: 0;
-}
-
-.profileInfo {
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-top: 60px;
+@keyframes show {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .editBtn,
@@ -94,4 +77,3 @@
 .showBtn:focus {
     outline: none;
 }
-

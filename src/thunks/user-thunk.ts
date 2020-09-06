@@ -18,11 +18,6 @@ export const requestUsers = (currentPage: number, sizePage: number, search: stri
     dispatch(actionsUser.triggerLoading(false))
 }
 
-export const setSearchUser = (search: string, type: string): ThunkCreatorType => (dispatch) => {
-    dispatch(actionsUser.setSearchUser(search, type))
-    dispatch(actionsUser.setCurrencyPage(1))
-}
-
 export const setFollow = (id: number, users: Array<any>): ThunkCreatorType => async (dispatch) => {
     const type = users.find((elem) => elem.id === id).followed ? 'unFollow' : 'follow'
 
@@ -37,4 +32,12 @@ export const setFollow = (id: number, users: Array<any>): ThunkCreatorType => as
 
 export const editCurrencyPage = (page: number): ThunkCreatorType => (dispatch) => {
     dispatch(actionsUser.setCurrencyPage(page))
+}
+
+export const editSizePage = (size: number): ThunkCreatorType => (dispatch) => {
+    dispatch(actionsUser.setSizePage(size))
+}
+
+export const setSearchUser = (search: string, type: string): ThunkCreatorType => (dispatch) => {
+    dispatch(actionsUser.setSearchUser(search, type))
 }

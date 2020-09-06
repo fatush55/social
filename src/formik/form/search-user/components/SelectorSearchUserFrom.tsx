@@ -18,9 +18,9 @@ export const SelectorSearchUserFrom: FC<PropsType> = memo(({handlerSelect, curre
     const [isSelectedMode, setSelectedMode] = useState(false)
     const handleMode = () => setSelectedMode(!isSelectedMode)
     const handlerItemSelect = (item: string) => {
-        setSelectedMode(!isSelectedMode)
         handlerSelect(item)
         formik.submitForm().then()
+        setSelectedMode(!isSelectedMode)
     }
 
     return (
